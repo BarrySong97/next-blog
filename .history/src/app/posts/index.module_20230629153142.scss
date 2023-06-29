@@ -1,0 +1,18 @@
+.articleList {
+  .articleItem {
+    position: relative;
+  }
+  .articleInfo {
+    // position: absolute;
+    backdrop-filter: blur(3px); /* 设置模糊半径 */
+    background-color: rgba(100, 99, 99, 0.5); /* 设置背景颜色和透明度 */
+    border-bottom-right-radius: 0.5rem /* 8px */;
+    border-bottom-left-radius: 0.5rem /* 8px */;
+    // width: 100%;
+    // background-position: center;
+    // color: white;
+    // bottom: 0;
+    // height: 30px;
+    // padding: 8px;
+  }
+}

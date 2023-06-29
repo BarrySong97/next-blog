@@ -1,0 +1,9 @@
+.articleList {
+  .articleItem {
+    position: relative;
+    .articleInfo {
+      position: absolute;
+      bottom: 20px;
+    }
+  }
+}

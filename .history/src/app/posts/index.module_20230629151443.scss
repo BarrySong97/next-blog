@@ -1,0 +1,13 @@
+.articleList {
+  .articleItem {
+    position: relative;
+    .articleInfo {
+      //   position: absolute;
+      //   backdrop-filter: blur(3px); /* 设置模糊半径 */
+      background-color: white; /* 设置背景颜色和透明度 */
+      //   width: 100%;
+      //   bottom: 0;
+      //   padding: 8px;
+    }
+  }
+}
