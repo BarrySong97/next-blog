@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import React, { FC, ReactNode, useState } from "react";
 import styles from "./index.module.scss";
-import * as Avatar from "@radix-ui/react-avatar";
+import { usePathname } from "next/navigation";
 import "./styles.css";
 import {
   IconParkFlashPayment,
@@ -11,7 +12,6 @@ import {
   NotoCameraWithFlash,
   NotoV1Postbox,
   RiWeiboFill,
-  SimpleIconsAboutdotme,
   TablerBrandBilibili,
   TablerBrandTwitterFilled,
   UimBox,
@@ -23,7 +23,7 @@ type SideMenuItem = {
   icon: ReactNode;
   link: string;
 };
-const SideBar: FC<SideBarProps> = () => {
+const Navigation: FC<SideBarProps> = () => {
   const menuItems: SideMenuItem[] = [
     {
       title: "主页",
@@ -46,7 +46,7 @@ const SideBar: FC<SideBarProps> = () => {
       link: "/photos",
     },
     {
-      title: "resume",
+      title: "简历",
       icon: <MaterialSymbolsAccountBox />,
       link: "/resume",
     },
@@ -73,82 +73,60 @@ const SideBar: FC<SideBarProps> = () => {
       link: "https://twitter.com/home",
     },
   ];
+  const pathname = usePathname();
   const [activeKey, setActiveKey] = useState<string>("/");
   return (
-    <div
-      className="px-6 sticky h-screen top-0"
-      style={{
-        borderRight: "1px solid rgb(231 229 228 / 0.7)",
-        borderStyle: "dashed",
-      }}
-    >
-      <div className="pt-16 pb-0 flex flex-col justify-start">
-        <section className="mb-2 flex ">
-          <Avatar.Root className="AvatarRoot mr-2">
-            <Avatar.Image
-              className="AvatarImage"
-              src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
-              alt="Colm Tuite"
-            />
-            <Avatar.Fallback className="AvatarFallback" delayMs={600}>
-              CT
-            </Avatar.Fallback>
-          </Avatar.Root>
-          <div>
-            <p className="text-stone-900 font-bold">@BarrySong4Real</p>
-            <p className="text-sm text-stone-600">全栈工程师</p>
-          </div>
-        </section>
-        <ul className="relative">
-          {menuItems.map((item) => {
-            const isActive = activeKey === item.link;
-            return (
-              <li key={item.title}>
-                <Link
-                  onClick={() => setActiveKey(item.link)}
-                  className={`${styles.sideLinkItem} ${
-                    isActive ? styles.sideLinkItemActive : ""
-                  } px-2 py-3   font-sans box-border  flex items-center text-base cursor-pointer`}
-                  href={item.link}
-                >
-                  {isActive ? <span className={styles.mark}></span> : null}
-                  <span style={{ zIndex: 100 }} className="mr-2 ">
-                    {item.icon}
-                  </span>
-                  <span
-                    style={{ zIndex: 100 }}
-                    className={`font-bold text-sm  ${
-                      isActive ? "text-stone-900" : "text-stone-400"
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="pointer-events-none  mb-2  hidden h-px bg-stone-200/70  md:block"></div>
-      <section className="mt-3">
-        <ul className="flex justify-between text-lg">
-          {contactItems.map((item) => (
+    <nav className="w-full py-4 z-50 bg-white items-center px-6 sticky top-0 flex justify-between">
+      <ul className="relative flex gap-2">
+        {menuItems.map((item) => {
+          const isActive = activeKey === item.link;
+          return (
             <li key={item.title}>
-              <SoicalCard type={item.title}>
-                <a
-                  href={item.link}
-                  target="_blank"
-                  className="text-stone-600 cursor-pointer hover:text-stone-950"
-                >
+              <Link
+                onClick={() => setActiveKey(item.link)}
+                className={`px-2 py-1 relative font-sans box-border  flex items-center text-lg cursor-pointer`}
+                href={item.link}
+              >
+                {item.link === pathname && (
+                  <motion.span
+                    layoutId="nav_underline"
+                    className="absolute left-0 top-full block h-px w-full bg-gray-500"
+                  ></motion.span>
+                )}
+                {/* {isActive ? <span className={styles.mark}></span> : null} */}
+                {/* <span style={{ zIndex: 100 }} className="mr-1 ">
                   {item.icon}
-                </a>
-              </SoicalCard>
+                </span> */}
+                <span
+                  style={{ zIndex: 100 }}
+                  className={`font-bold text-sm hover:text-stone-900 ${
+                    isActive ? "text-stone-900" : "text-stone-400"
+                  }`}
+                >
+                  {item.title}
+                </span>
+              </Link>
             </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+          );
+        })}
+      </ul>
+      <ul className="flex gap-4 justify-between text-lg">
+        {contactItems.map((item) => (
+          <li key={item.title}>
+            <SoicalCard type={item.title}>
+              <a
+                href={item.link}
+                target="_blank"
+                className="text-stone-600 cursor-pointer hover:text-stone-950"
+              >
+                {item.icon}
+              </a>
+            </SoicalCard>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 
-export default SideBar;
+export default Navigation;

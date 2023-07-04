@@ -1,4 +1,7 @@
 "use client";
+import "./styles.css";
+import { Image } from "@douyinfe/semi-ui";
+import Sheet from "../components/Sheet";
 export default function Home() {
   const imgs = [
     {
@@ -21,29 +24,23 @@ export default function Home() {
     },
   ];
   return (
-    <main className="p-1">
-      <style jsx>{`
-        .masonry {
-          column-count: 2;
-          column-gap: 2rem;
-        }
-        @screen lg {
-          .masonry {
-            column-count: 4;
-          }
-        }
-      `}</style>
-      <h2 className="text-2xl font-bold mb-1">照片</h2>
-      <p className="text-stone-400 text-xs mb-3">记录，过去的痕迹，瞬间。</p>
-      <section className="masonry ">
-        {imgs.map((img, index) => {
-          return (
-            <div key={index} className=" rounded-md mb-3">
-              <img src={img.src} className=" object-cover rounded-md" />
-            </div>
-          );
-        })}
-      </section>
-    </main>
+    <Sheet>
+      <main className="p-1 photos">
+        <h2 className="text-2xl font-bold mb-1">照片</h2>
+        <p className="text-stone-400 text-xs mb-3">记录，过去的痕迹，瞬间。</p>
+        <section className="grid grid-cols-4 gap-2 ">
+          {imgs.map((img, index) => {
+            return (
+              <div key={index} className="mb-3  h-[250px] ">
+                <Image
+                  className={"object-cover rounded-md w-full h-full  "}
+                  src={img.src}
+                />
+              </div>
+            );
+          })}
+        </section>
+      </main>
+    </Sheet>
   );
 }

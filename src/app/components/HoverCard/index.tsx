@@ -28,14 +28,21 @@ const SoicalCard = ({
         return <TwitterCard />;
     }
   };
-  const hoverCardClassName = classnames("HoverCardContent", {
+  const hoverCardClassName = classnames("HoverCardContent ", {
     "p-0": ["weibo", "bilibili"].includes(type),
   });
   return (
     <HoverCard.Root openDelay={300}>
       <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
       <HoverCard.Portal>
-        <HoverCard.Content className={hoverCardClassName} sideOffset={5}>
+        <HoverCard.Content
+          style={{
+            zIndex: 9999,
+            position: "relative",
+          }}
+          className={hoverCardClassName}
+          sideOffset={5}
+        >
           <HoverCard.Arrow className="HoverCardArrow" />
           {renderContent()}
         </HoverCard.Content>

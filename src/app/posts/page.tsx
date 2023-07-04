@@ -1,24 +1,53 @@
+import classNames from "classnames";
+import Sheet from "../components/Sheet";
 import styles from "./index.module.scss";
-
-export default function Home() {
+export type PostItemProps = {
+  title: string;
+  date: string;
+  cover: string;
+  description: string;
+  className?: string;
+  style?: React.CSSProperties;
+};
+export function PostItem({
+  title,
+  className = "",
+  style,
+  date,
+  cover,
+  description,
+}: PostItemProps) {
+  const _className = classNames(className, styles.articleItem);
   return (
-    <main className={`${styles.articleList} mb-4 p-1`}>
-      <h2 className="text-2xl font-bold mb-1">文章列表</h2>
-      <p className="text-stone-400 mb-4 text-xs">分享我的看法，记录我的思想</p>
-      <ul className="grid grid-cols-1 gap-6  lg:grid-cols-2 lg:gap-8">
-        <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-          <a href="">
-            <img
-              src="https://images-1253529509.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230523170724.jpg"
-              // alt="rounded-t-lg"
-              className="rounded-t-lg aspect-[240/135] w-full object-cover"
-            />
-            <div>
+    <a className={_className} style={style} href="">
+      <img
+        src={cover}
+        className="rounded-lg aspect-[240/135] w-full object-cover"
+      />
+      <div className={styles.articleInfo}>
+        <div className="relative px-4 py-1  text-white rounded-b-lg">
+          <h3 className="font-bold text-sm">{title}</h3>
+          <span className="text-sm">{date}</span>
+          {/* <p>{description}</p> */}
+        </div>
+      </div>
+    </a>
+  );
+}
+export default function Posts() {
+  return (
+    <Sheet>
+      <main className={`${styles.articleList} mb-4 p-1`}>
+        <h2 className="text-2xl font-bold mb-1">文章列表</h2>
+        <p className="text-stone-400 mb-4 text-xs">
+          分享我的看法，记录我的思想
+        </p>
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
+          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
+            <a href="">
               <img
                 src="https://images-1253529509.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230523170724.jpg"
-                alt=""
-                style={{ height: 52 }}
-                className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
+                className="rounded-t-lg aspect-[240/135] w-full object-cover"
               />
               <div className={styles.articleInfo}>
                 <div className="relative px-4 py-1  text-white rounded-b-lg">
@@ -26,33 +55,102 @@ export default function Home() {
                   <div className="text-sm">2023/03/04</div>
                 </div>
               </div>
-            </div>
-          </a>
-        </li>
-        <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-          <a href="">
-            <img
-              src="https://files.catbox.moe/4uftut.png"
-              // alt="rounded-t-lg"
-              className="rounded-t-lg aspect-[240/135] w-full object-cover"
-            />
-            <div>
+            </a>
+          </li>
+          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
+            <a href="">
               <img
                 src="https://files.catbox.moe/4uftut.png"
-                alt=""
-                style={{ height: 48 }}
-                className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
+                // alt="rounded-t-lg"
+                className="rounded-t-lg aspect-[240/135] w-full object-cover"
               />
-              <div className={styles.articleInfo}>
-                <div className="relative px-4 py-1  text-white rounded-b-lg">
-                  <h3 className="font-bold ">111</h3>
-                  <div className="text-sm">2023/03/04</div>
+              <div>
+                <img
+                  src="https://files.catbox.moe/4uftut.png"
+                  alt=""
+                  style={{ height: 48 }}
+                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
+                />
+                <div className={styles.articleInfo}>
+                  <div className="relative px-4 py-1  text-white rounded-b-lg">
+                    <h3 className="font-bold ">111</h3>
+                    <div className="text-sm">2023/03/04</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </main>
+            </a>
+          </li>
+          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
+            <a href="">
+              <img
+                src="https://files.catbox.moe/4uftut.png"
+                // alt="rounded-t-lg"
+                className="rounded-t-lg aspect-[240/135] w-full object-cover"
+              />
+              <div>
+                <img
+                  src="https://files.catbox.moe/4uftut.png"
+                  alt=""
+                  style={{ height: 48 }}
+                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
+                />
+                <div className={styles.articleInfo}>
+                  <div className="relative px-4 py-1  text-white rounded-b-lg">
+                    <h3 className="font-bold ">111</h3>
+                    <div className="text-sm">2023/03/04</div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
+            <a href="">
+              <img
+                src="https://files.catbox.moe/4uftut.png"
+                // alt="rounded-t-lg"
+                className="rounded-t-lg aspect-[240/135] w-full object-cover"
+              />
+              <div>
+                <img
+                  src="https://files.catbox.moe/4uftut.png"
+                  alt=""
+                  style={{ height: 48 }}
+                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
+                />
+                <div className={styles.articleInfo}>
+                  <div className="relative px-4 py-1  text-white rounded-b-lg">
+                    <h3 className="font-bold ">111</h3>
+                    <div className="text-sm">2023/03/04</div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
+            <a href="">
+              <img
+                src="https://files.catbox.moe/4uftut.png"
+                // alt="rounded-t-lg"
+                className="rounded-t-lg aspect-[240/135] w-full object-cover"
+              />
+              <div>
+                <img
+                  src="https://files.catbox.moe/4uftut.png"
+                  alt=""
+                  style={{ height: 48 }}
+                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
+                />
+                <div className={styles.articleInfo}>
+                  <div className="relative px-4 py-1  text-white rounded-b-lg">
+                    <h3 className="font-bold ">111</h3>
+                    <div className="text-sm">2023/03/04</div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </main>
+    </Sheet>
   );
 }

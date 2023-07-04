@@ -1,5 +1,5 @@
 import Sheet from "./components/Sheet";
-import SideBar from "./components/SideBar";
+import Navigation from "./components/SideBar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -17,10 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`inter.className  bg-stone-50 `}>
-        <main className="relative mx-2 flex min-h-screen max-w-4xl flex-col  md:mx-4 md:mt-0 md:flex-row  lg:mx-auto ">
-          <SideBar />
-          <Sheet>{children}</Sheet>
+      <body className={`inter.className  `}>
+        <main className="relative mx-2 min-h-screen md:max-w-4xl sm:max-w-none lg:max-w-6xl flex-col  md:mx-4 md:mt-0 md:flex-row  lg:mx-auto ">
+          <Navigation />
+          {children}
         </main>
       </body>
     </html>
