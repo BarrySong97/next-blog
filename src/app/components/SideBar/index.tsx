@@ -45,11 +45,11 @@ const Navigation: FC<SideBarProps> = () => {
       icon: <NotoCameraWithFlash />,
       link: "/photos",
     },
-    {
-      title: "简历",
-      icon: <MaterialSymbolsAccountBox />,
-      link: "/resume",
-    },
+    // {
+    //   title: "简历",
+    //   icon: <MaterialSymbolsAccountBox />,
+    //   link: "/resume",
+    // },
   ];
   const contactItems: SideMenuItem[] = [
     {

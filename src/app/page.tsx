@@ -3,54 +3,17 @@ import { Image } from "@douyinfe/semi-ui";
 import Sheet from "./components/Sheet";
 import styles from "./page.module.scss";
 import { PostItem, PostItemProps } from "./posts/page";
+import { proxy } from "@/blogapi/core/OpenAPI";
+import { useRequest } from "ahooks";
+import { PhotoDTO, PostDTO } from "@/blogapi";
 
 export default function Home() {
-  const imgs = [
-    {
-      src: "https://pic.imgdb.cn/item/64a38a281ddac507cc5ec2d8.jpg",
-    },
-    // {
-    //   src: "https://pic.imgdb.cn/item/64a38a1f1ddac507cc5eb255.jpg",
-    // },
-    // {
-    //   src: "https://pic.imgdb.cn/item/64a38a281ddac507cc5ec1e6.jpg",
-    // },
-    {
-      src: "https://pic.imgdb.cn/item/64a38a281ddac507cc5ec22c.jpg",
-    },
-    {
-      src: "https://pic.imgdb.cn/item/64a38a281ddac507cc5ec26f.jpg",
-    },
-    {
-      src: "https://pic.imgdb.cn/item/64a38a1f1ddac507cc5eb21d.jpg",
-    },
-    {
-      src: "https://pic.imgdb.cn/item/64a38a271ddac507cc5ec193.jpg",
-    },
-    {
-      src: "https://pic.imgdb.cn/item/64a38a1f1ddac507cc5eb318.jpg",
-    },
-  ];
-  const PostList: PostItemProps[] = [
-    {
-      title: "不论多少公里，多少风雨太阳照常升起",
-      cover: imgs[0].src,
-      date: "2021/03/04",
-      description: "吃啥表是灰色的金黄色的",
-    },
-    {
-      title: "人生第一次骑单车",
-      cover: imgs[1].src,
-      date: "2021/03/04",
-      description: "吃啥表是灰色的金黄色的",
-    },
-    {
-      title: "大学划龙舟的时光难过但是带给我一些东西",
-      cover: imgs[2].src,
-      date: "2021/03/04",
-      description: "吃啥表是灰色的金黄色的",
-    },
-  ];
+  const { data: imgs } = useRequest<PhotoDTO[], any>(() =>
+    fetch(`${proxy}/photos/recent`).then((res) => res.json())
+  );
+  const { data: PostList } = useRequest<PostDTO[], any>(() =>
+    fetch(`${proxy}/posts/recent`).then((res) => res.json())
+  );
   const gallery = [
     "col-[span_2_] row-[span_2_]",
     "col-[span_2_] row-[span_1_]",
@@ -78,17 +41,14 @@ export default function Home() {
       <section className="mt-6">
         <h2 className="font-bold text-lg mb-2">最近文章</h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
-          {PostList.map((post, idx) => {
-            const first = idx === 0;
+          {PostList?.map((post, idx) => {
             return (
               <PostItem
-                style={
-                  {
-                    // gridColumn: first ? "1/3" : "auto",
-                  }
-                }
-                key={post.title}
-                {...post}
+                key={post.id}
+                date={post.createdAt}
+                id={post.id}
+                title={post.title}
+                cover={post.cover}
               ></PostItem>
             );
           })}
@@ -97,13 +57,13 @@ export default function Home() {
       <section className={`mt-6 `}>
         <h2 className="font-bold text-lg mb-2">最近照片</h2>
         <div className={styles.gallery}>
-          {imgs.map((img, idx) => {
+          {imgs?.reverse().map((img, idx) => {
             const imgClassName = gallery[idx];
             return (
               <Image
-                key={img.src}
+                key={img.id}
                 className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
-                src={img.src}
+                src={img.url}
               />
             );
           })}

@@ -1,13 +1,18 @@
 import classNames from "classnames";
 import Sheet from "../components/Sheet";
 import styles from "./index.module.scss";
+import { Suspense } from "react";
+import { PostDTO } from "@/blogapi";
+import dayjs from "dayjs";
+import { proxy } from "@/blogapi/core/OpenAPI";
+import Link from "next/link";
 export type PostItemProps = {
   title: string;
   date: string;
   cover: string;
-  description: string;
   className?: string;
   style?: React.CSSProperties;
+  id: string;
 };
 export function PostItem({
   title,
@@ -15,11 +20,12 @@ export function PostItem({
   style,
   date,
   cover,
-  description,
+  id,
 }: PostItemProps) {
   const _className = classNames(className, styles.articleItem);
+  const _date = dayjs(date).format("YYYY/MM/DD");
   return (
-    <a className={_className} style={style} href="">
+    <Link className={_className} style={style} href={`/posts/${id}`}>
       <img
         src={cover}
         className="rounded-lg aspect-[240/135] w-full object-cover"
@@ -27,14 +33,16 @@ export function PostItem({
       <div className={styles.articleInfo}>
         <div className="relative px-4 py-1  text-white rounded-b-lg">
           <h3 className="font-bold text-sm">{title}</h3>
-          <span className="text-sm">{date}</span>
-          {/* <p>{description}</p> */}
+          <span className="text-sm">{_date}</span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
-export default function Posts() {
+export default async function Posts() {
+  const data: PostDTO[] = await fetch(`${proxy}/posts`).then((res) =>
+    res.json()
+  );
   return (
     <Sheet>
       <main className={`${styles.articleList} mb-4 p-1`}>
@@ -43,112 +51,19 @@ export default function Posts() {
           分享我的看法，记录我的思想
         </p>
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
-          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-            <a href="">
-              <img
-                src="https://images-1253529509.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230523170724.jpg"
-                className="rounded-t-lg aspect-[240/135] w-full object-cover"
-              />
-              <div className={styles.articleInfo}>
-                <div className="relative px-4 py-1  text-white rounded-b-lg">
-                  <h3 className="font-bold ">111</h3>
-                  <div className="text-sm">2023/03/04</div>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-            <a href="">
-              <img
-                src="https://files.catbox.moe/4uftut.png"
-                // alt="rounded-t-lg"
-                className="rounded-t-lg aspect-[240/135] w-full object-cover"
-              />
-              <div>
-                <img
-                  src="https://files.catbox.moe/4uftut.png"
-                  alt=""
-                  style={{ height: 48 }}
-                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
-                />
-                <div className={styles.articleInfo}>
-                  <div className="relative px-4 py-1  text-white rounded-b-lg">
-                    <h3 className="font-bold ">111</h3>
-                    <div className="text-sm">2023/03/04</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-            <a href="">
-              <img
-                src="https://files.catbox.moe/4uftut.png"
-                // alt="rounded-t-lg"
-                className="rounded-t-lg aspect-[240/135] w-full object-cover"
-              />
-              <div>
-                <img
-                  src="https://files.catbox.moe/4uftut.png"
-                  alt=""
-                  style={{ height: 48 }}
-                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
-                />
-                <div className={styles.articleInfo}>
-                  <div className="relative px-4 py-1  text-white rounded-b-lg">
-                    <h3 className="font-bold ">111</h3>
-                    <div className="text-sm">2023/03/04</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-            <a href="">
-              <img
-                src="https://files.catbox.moe/4uftut.png"
-                // alt="rounded-t-lg"
-                className="rounded-t-lg aspect-[240/135] w-full object-cover"
-              />
-              <div>
-                <img
-                  src="https://files.catbox.moe/4uftut.png"
-                  alt=""
-                  style={{ height: 48 }}
-                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
-                />
-                <div className={styles.articleInfo}>
-                  <div className="relative px-4 py-1  text-white rounded-b-lg">
-                    <h3 className="font-bold ">111</h3>
-                    <div className="text-sm">2023/03/04</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </li>
-          <li className={`relative rounded-t-lg ${styles.articleItem}`}>
-            <a href="">
-              <img
-                src="https://files.catbox.moe/4uftut.png"
-                // alt="rounded-t-lg"
-                className="rounded-t-lg aspect-[240/135] w-full object-cover"
-              />
-              <div>
-                <img
-                  src="https://files.catbox.moe/4uftut.png"
-                  alt=""
-                  style={{ height: 48 }}
-                  className="h-full object-cover absolute w-full rounded-b-lg bottom-0 left-0"
-                />
-                <div className={styles.articleInfo}>
-                  <div className="relative px-4 py-1  text-white rounded-b-lg">
-                    <h3 className="font-bold ">111</h3>
-                    <div className="text-sm">2023/03/04</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </li>
+          <Suspense fallback={<div>Loading...</div>}>
+            {data.map((post) => {
+              return (
+                <PostItem
+                  key={post.id}
+                  date={post.createdAt}
+                  id={post.id}
+                  title={post.title}
+                  cover={post.cover}
+                ></PostItem>
+              );
+            })}
+          </Suspense>
         </ul>
       </main>
     </Sheet>
