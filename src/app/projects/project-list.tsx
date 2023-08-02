@@ -24,13 +24,13 @@ export default async function ProjectList() {
               <div className="project-links">
                 <a
                   className="text-base   cursor-pointer text-stone-950"
-                  href={project.link}
+                  href={project.url}
                   target="_blank"
                 >
                   <span>{project.name}</span>
                 </a>
               </div>
-              {project.github && (
+              {/* {project.github && (
                 <a
                   className="cursor-pointer "
                   href={project.github}
@@ -38,17 +38,17 @@ export default async function ProjectList() {
                 >
                   <MdiGithub />
                 </a>
-              )}
+              )} */}
             </div>
             <div className="text-xs mb-2 text-gray-500">
-              {project.description}
+              {project.content}
             </div>
           </div>
           <div className="flex justify-between items-center project-links">
             <div className="flex gap-1 items-center">
               <a
                 className="text-xs flex items-center  cursor-pointer mr-1 text-gray-600"
-                href={project.link}
+                href={project.url}
                 target="_blank"
               >
                 <span className="mr-1">阅读相关文章</span>
