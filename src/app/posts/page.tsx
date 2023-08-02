@@ -40,9 +40,11 @@ export function PostItem({
   );
 }
 export default async function Posts() {
-  const data: PostDTO[] = await fetch(`${proxy}/posts`).then((res) =>
+  const data: PostDTO[] | undefined = await fetch(`${proxy}/posts`).then((res) =>
     res.json()
-  );
+  ).catch((err) => {
+    console.log(err);
+  });
   return (
     <Sheet>
       <main className={`${styles.articleList} mb-4 p-1`}>
@@ -52,7 +54,7 @@ export default async function Posts() {
         </p>
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
           <Suspense fallback={<div>Loading...</div>}>
-            {data.map((post) => {
+            {data?.map((post) => {
               return (
                 <PostItem
                   key={post.id}
