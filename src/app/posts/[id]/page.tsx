@@ -3,7 +3,8 @@ import Sheet from "@/app/components/Sheet";
 import { PostDTO } from "@/blogapi";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { useRequest } from "ahooks";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
+import styles from "./index.module.scss";
 import "./markdown.css";
 import { unified } from "unified";
 import ReactMarkdown from "react-markdown";
@@ -67,17 +68,28 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
             className="object-cover  mb-8 rounded-md w-full"
           />
         </div>
-          <ul className="fixed top-[80px] left-[160px] ">
-            {toc?.map((item) => {
-              const leading = `ml-${(item.depth - 2) * 4}`;
-              console.log(leading);
-              return (
-                <li key={item.title} className={`${leading} `}>
+        <ul className="fixed top-[80px] left-[160px] md:max-w-[300px]   ">
+          {toc?.map((item) => {
+            return (
+              <li
+                key={item.title}
+                style={{
+                  marginLeft: `${(item.depth - 2) * 10}px`,
+                }}
+              >
+                <a
+                  style={{
+                    borderBottom: "1px dashed rgba(125,125,125,.3)",
+                  }}
+                  className={`text-stone-700 text-sm cursor-pointer ${styles.tocItem}}`}
+                  href={`#${item.title}`}
+                >
                   {item.title}
-                </li>
-              );
-            })}
-          </ul>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
         <div>
           <article className="wmde-markdown ">
             <h1>{data?.title}</h1>
@@ -99,6 +111,12 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
                       {children}
                     </code>
                   );
+                },
+                h2({ node, inline, className, children, ...props }) {
+                  return <h2 id={`${node.children?.[0].value}`}>{children}</h2>;
+                },
+                h3({ node, inline, className, children, ...props }) {
+                  return <h3 id={`${node.children?.[0].value}`}>{children}</h3>;
                 },
               }}
             >

@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  nextjs:
+    container_name: next-blog-ui
+    networks:
+      - breeze_default
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+networks:
+  breeze_default:
+    external: true

@@ -22,7 +22,7 @@ export function PostItem({
   cover,
   id,
 }: PostItemProps) {
-  const _className = classNames(className, styles.articleItem);
+  const _className = classNames(className, styles.articleItem, 'cursor-pointer');
   const _date = dayjs(date).format("YYYY/MM/DD");
   return (
     <Link className={_className} style={style} href={`/posts/${id}`}>
