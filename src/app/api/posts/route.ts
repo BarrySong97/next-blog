@@ -7,10 +7,10 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const isRecent = searchParams.get("recent") === "true";
 
-    const response = await axios.get(
-      `http://admin.barrysong4real.cc/api/posts${isRecent ? "/recent" : ""}`
-    );
-    const data = response.data;
+    // const response = await axios.get(
+    //   `${proxy}/api/posts${isRecent ? "/recent" : ""}`
+    // );
+    // const data = response.data;
 
     return NextResponse.json({ a: 1 });
   } catch (error) {
