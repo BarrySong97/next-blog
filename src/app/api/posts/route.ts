@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     );
     const data = response.data;
 
-    return NextResponse.json(data?.length ? data : []);
+    return NextResponse.json({ a: 1 });
   } catch (error) {
     return NextResponse.json([]);
   }
