@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import classNames from "classnames";
 import Sheet from "../components/Sheet";
 import styles from "./index.module.scss";
@@ -45,7 +45,7 @@ export function PostItem({
     </Link>
   );
 }
-export default async function Posts() {
+export default function Posts() {
   const { data } = useRequest<PostDTO[], any>(() =>
     axios.get(`/api/posts`).then((res) => res.data)
   );
@@ -57,19 +57,17 @@ export default async function Posts() {
           分享我的看法，记录我的思想
         </p>
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
-          <Suspense fallback={<div>Loading...</div>}>
-            {data?.map((post) => {
-              return (
-                <PostItem
-                  key={post.id}
-                  date={post.createdAt}
-                  id={post.id}
-                  title={post.title}
-                  cover={post.cover}
-                ></PostItem>
-              );
-            })}
-          </Suspense>
+          {data?.map((post) => {
+            return (
+              <PostItem
+                key={post.id}
+                date={post.createdAt}
+                id={post.id}
+                title={post.title}
+                cover={post.cover}
+              ></PostItem>
+            );
+          })}
         </ul>
       </main>
     </Sheet>
