@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const isRecent = searchParams.get("recent") === "true";
+    // const { searchParams } = new URL(request.url);
+    // const isRecent = searchParams.get("recent") === "true";
 
     // const response = await axios.get(
     //   `${proxy}/api/posts${isRecent ? "/recent" : ""}`
@@ -14,6 +14,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ a: 1 });
   } catch (error) {
-    return NextResponse.json(error);
+    // return NextResponse.json(error);
   }
 }
