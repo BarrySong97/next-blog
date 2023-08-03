@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const data = await fetch(`${proxy}/api/projects`);
-    return NextResponse.json(data.json());
+    const response = await fetch(`${proxy}/api/projects`);
+    const data = await response.json();
+    return NextResponse.json(data?.length ? data : []);
   } catch (error) {
     return NextResponse.json([]);
   }

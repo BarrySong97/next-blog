@@ -14,18 +14,14 @@ import { CodeBlock } from "@/app/components/CodeBlock";
 import remarkToc from "remark-toc";
 import markdown from "remark-parse";
 import { MdastNodes } from "mdast-util-to-hast/lib/state";
+import axios from "axios";
 const PostDetail = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [toc, setToc] = useState<
     { title: string; depth: number }[] | undefined
   >([]);
   const { data } = useRequest<PostDTO, any>(
-    () =>
-      fetch(`/api/posts/${id}`)
-        .then((res) => res.json())
-        .catch((err) => {
-          console.log(err);
-        }),
+    () => axios.get(`/api/posts/${id}`).then((res) => res.data),
     {
       onSuccess: (data) => {
         if (data) {

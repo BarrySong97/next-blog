@@ -6,10 +6,11 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const isRecent = searchParams.get("recent") === "true";
 
-    const data = await fetch(
+    const response = await fetch(
       `${proxy}/api/photos${isRecent ? "/recent" : ""}`
     );
-    return NextResponse.json(data.json());
+    const data = await response.json();
+    return NextResponse.json(data?.length ? data : []);
   } catch (error) {
     return NextResponse.json([]);
   }

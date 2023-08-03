@@ -1,11 +1,13 @@
+"use client"
 import classNames from "classnames";
 import Sheet from "../components/Sheet";
 import styles from "./index.module.scss";
 import { Suspense } from "react";
 import { PostDTO } from "@/blogapi";
 import dayjs from "dayjs";
-import { proxy } from "@/blogapi/core/OpenAPI";
 import Link from "next/link";
+import axios from "axios";
+import { useRequest } from "ahooks";
 export type PostItemProps = {
   title: string;
   date: string;
@@ -22,7 +24,11 @@ export function PostItem({
   cover,
   id,
 }: PostItemProps) {
-  const _className = classNames(className, styles.articleItem, 'cursor-pointer');
+  const _className = classNames(
+    className,
+    styles.articleItem,
+    "cursor-pointer"
+  );
   const _date = dayjs(date).format("YYYY/MM/DD");
   return (
     <Link className={_className} style={style} href={`/posts/${id}`}>
@@ -40,13 +46,9 @@ export function PostItem({
   );
 }
 export default async function Posts() {
-  console.log(proxy);
-  
-  const data: PostDTO[] | undefined = await fetch(`/api/posts`).then((res) =>
-    res.json()
-  ).catch((err) => {
-    console.log(err);
-  });
+  const { data } = useRequest<PostDTO[], any>(() =>
+    axios.get(`/api/posts`).then((res) => res.data)
+  );
   return (
     <Sheet>
       <main className={`${styles.articleList} mb-4 p-1`}>

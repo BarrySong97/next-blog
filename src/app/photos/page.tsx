@@ -5,9 +5,10 @@ import Sheet from "../components/Sheet";
 import { PhotoDTO } from "@/blogapi";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { useRequest } from "ahooks";
+import axios from "axios";
 export default function Home() {
   const { data } = useRequest<PhotoDTO[], any>(() =>
-    fetch(`/api/photos`).then((res) => res.json())
+    axios.get(`/api/photos`).then((res) => res.data)
   );
   return (
     <Sheet>

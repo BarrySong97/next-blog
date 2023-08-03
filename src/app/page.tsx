@@ -6,13 +6,14 @@ import { PostItem, PostItemProps } from "./posts/page";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { useRequest } from "ahooks";
 import { PhotoDTO, PostDTO } from "@/blogapi";
+import axios from "axios";
 
 export default function Home() {
   const { data: imgs } = useRequest<PhotoDTO[], any>(() =>
-    fetch(`/api/photos?recent=true`).then((res) => res.json())
+    axios.get(`/api/photos?recent=true`).then((res) => res.data)
   );
   const { data: PostList } = useRequest<PostDTO[], any>(() =>
-    fetch(`/api/posts?recent=true`).then((res) => res.json())
+    axios.get(`/api/posts?recent=true`).then((res) => res.data)
   );
   const gallery = [
     "col-[span_2_] row-[span_2_]",
