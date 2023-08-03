@@ -7,7 +7,7 @@ import { proxy } from "@/blogapi/core/OpenAPI";
 import { useRequest } from "ahooks";
 export default function Home() {
   const { data } = useRequest<PhotoDTO[], any>(() =>
-    fetch(`${proxy}/photos`).then((res) => res.json())
+    fetch(`/api/photos`).then((res) => res.json())
   );
   return (
     <Sheet>

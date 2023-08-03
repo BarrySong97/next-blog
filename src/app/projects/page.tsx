@@ -17,7 +17,7 @@ type Project = {
 export default function Projects() {
 
   const { data } = useRequest<ProjectDTO[], any>(() => {
-    return fetch(`${proxy}/projects`).then((res) => res.json());
+    return fetch(`/api/projects`).then((res) => res.json());
   });
 
   return (

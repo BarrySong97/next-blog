@@ -21,7 +21,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   >([]);
   const { data } = useRequest<PostDTO, any>(
     () =>
-      fetch(`${proxy}/posts/${id}`)
+      fetch(`/api/posts/${id}`)
         .then((res) => res.json())
         .catch((err) => {
           console.log(err);

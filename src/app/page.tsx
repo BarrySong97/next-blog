@@ -9,10 +9,10 @@ import { PhotoDTO, PostDTO } from "@/blogapi";
 
 export default function Home() {
   const { data: imgs } = useRequest<PhotoDTO[], any>(() =>
-    fetch(`${proxy}/photos/recent`).then((res) => res.json())
+    fetch(`/api/photos?recent=true`).then((res) => res.json())
   );
   const { data: PostList } = useRequest<PostDTO[], any>(() =>
-    fetch(`${proxy}/posts/recent`).then((res) => res.json())
+    fetch(`/api/posts?recent=true`).then((res) => res.json())
   );
   const gallery = [
     "col-[span_2_] row-[span_2_]",
