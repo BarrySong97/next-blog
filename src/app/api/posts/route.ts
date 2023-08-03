@@ -2,6 +2,7 @@ import { proxy } from "@/blogapi/core/OpenAPI";
 import axios from "axios";
 import { NextResponse } from "next/server";
 export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
