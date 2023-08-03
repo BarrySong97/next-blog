@@ -6,7 +6,7 @@
     "dev": " next dev -p 3001",
     "build": "next build",
     "api:generate": "openapi --input http://localhost:3000/api-json --output ./src/blogapi --exportCore false -c axios",
-    "start": "PORT=9000 next start ",
+    "start": "next start ",
     "lint": "next lint"
   },
   "dependencies": {
