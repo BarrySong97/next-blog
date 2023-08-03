@@ -14,6 +14,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ a: 1 });
   } catch (error) {
-    return NextResponse.json({ a: 1 });
+    return NextResponse.json(error);
   }
 }
