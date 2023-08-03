@@ -40,6 +40,8 @@ export function PostItem({
   );
 }
 export default async function Posts() {
+  console.log(proxy);
+  
   const data: PostDTO[] | undefined = await fetch(`${proxy}/posts`).then((res) =>
     res.json()
   ).catch((err) => {
