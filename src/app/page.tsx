@@ -6,7 +6,6 @@ import { PhotoDTO, PostDTO } from "@/blogapi";
 import axios from "axios";
 import Image from "next/image";
 import { Metadata } from "next";
-export const revalidate = 1000;
 export const metadata: Metadata = {
   title: "Barry Song's Blog",
   description: "Barry Song的个人博客, 分享我的生活和code",
