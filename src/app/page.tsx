@@ -6,6 +6,7 @@ import { PhotoDTO, PostDTO } from "@/blogapi";
 import axios from "axios";
 import Image from "next/image";
 import { Metadata } from "next";
+import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "Barry Song's Blog",
   description: "Barry Song的个人博客, 分享我的生活和code",
@@ -43,40 +44,42 @@ export default async function Home() {
           的一切。
         </p>
       </main>
-      <section className="mt-6">
-        <h2 className="font-bold text-lg mb-2">最近文章</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
-          {PostList?.map((post, idx) => {
-            return (
-              <PostItem
-                key={post.id}
-                date={post.createdAt}
-                id={post.id}
-                title={post.title}
-                cover={post.cover}
-              ></PostItem>
-            );
-          })}
-        </div>
-      </section>
-      <section className={`mt-6 `}>
-        <h2 className="font-bold text-lg mb-2">最近照片</h2>
-        <div className={styles.gallery}>
-          {imgs?.reverse().map((img, idx) => {
-            const imgClassName = gallery[idx];
-            return (
-              <Image
-                height={250}
-                width={250}
-                key={img.id}
-                className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
-                src={img.url}
-                alt={"imgs"}
-              />
-            );
-          })}
-        </div>
-      </section>
+      <Suspense fallback={<>error...</>}>
+        <section className="mt-6">
+          <h2 className="font-bold text-lg mb-2">最近文章</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
+            {PostList?.map((post, idx) => {
+              return (
+                <PostItem
+                  key={post.id}
+                  date={post.createdAt}
+                  id={post.id}
+                  title={post.title}
+                  cover={post.cover}
+                ></PostItem>
+              );
+            })}
+          </div>
+        </section>
+        <section className={`mt-6 `}>
+          <h2 className="font-bold text-lg mb-2">最近照片</h2>
+          <div className={styles.gallery}>
+            {imgs?.reverse().map((img, idx) => {
+              const imgClassName = gallery[idx];
+              return (
+                <Image
+                  height={250}
+                  width={250}
+                  key={img.id}
+                  className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
+                  src={img.url}
+                  alt={"imgs"}
+                />
+              );
+            })}
+          </div>
+        </section>
+      </Suspense>
     </Sheet>
   );
 }
