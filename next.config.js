@@ -7,6 +7,18 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "pic.imgdb.cn",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.hashnode.com",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

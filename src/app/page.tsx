@@ -1,11 +1,16 @@
-import { Image } from "@douyinfe/semi-ui";
 import Sheet from "./components/Sheet";
 import styles from "./page.module.scss";
-import { PostItem, PostItemProps } from "./posts/page";
+import { PostItem } from "./posts/page";
 import { proxy } from "@/blogapi/core/OpenAPI";
-import { useRequest } from "ahooks";
 import { PhotoDTO, PostDTO } from "@/blogapi";
 import axios from "axios";
+import Image from "next/image";
+import { Metadata } from "next";
+export const revalidate = 1000;
+export const metadata: Metadata = {
+  title: "Barry Song's Blog",
+  description: "Barry Song的个人博客, 分享我的生活和code",
+};
 
 export default async function Home() {
   const imgs: PhotoDTO[] = await axios
@@ -61,10 +66,13 @@ export default async function Home() {
           {imgs?.reverse().map((img, idx) => {
             const imgClassName = gallery[idx];
             return (
-              <img
+              <Image
+                height={250}
+                width={250}
                 key={img.id}
                 className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
                 src={img.url}
+                alt={"imgs"}
               />
             );
           })}

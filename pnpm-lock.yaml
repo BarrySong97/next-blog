@@ -13,6 +13,7 @@ specifiers:
   '@types/node': 20.3.2
   '@types/react': 18.2.14
   '@types/react-dom': 18.2.6
+  '@types/react-lazyload': ^3.2.0
   '@types/react-syntax-highlighter': ^15.5.7
   '@types/react-virtualized': ^9.21.22
   ahooks: ^3.7.8
@@ -81,6 +82,7 @@ dependencies:
 
 devDependencies:
   '@tailwindcss/typography': 0.5.9_tailwindcss@3.3.2
+  '@types/react-lazyload': 3.2.0
   '@types/react-syntax-highlighter': 15.5.7
   '@types/react-virtualized': 9.21.22
   openapi-typescript-codegen: 0.25.0
@@ -1001,6 +1003,12 @@ packages:
     dependencies:
       '@types/react': 18.2.14
     dev: false
+
+  /@types/react-lazyload/3.2.0:
+    resolution: {integrity: sha512-4+r+z8Cf7L/mgxA1vl5uHx5GS/8gY2jqq2p5r5WCm+nUsg9KilwQ+8uaJA3EUlLj57AOzOfGGwwRJ5LOVl8fwA==}
+    dependencies:
+      '@types/react': 18.2.14
+    dev: true
 
   /@types/react-syntax-highlighter/15.5.7:
     resolution: {integrity: sha512-bo5fEO5toQeyCp0zVHBeggclqf5SQ/Z5blfFmjwO5dkMVGPgmiwZsJh9nu/Bo5L7IHTuGWrja6LxJVE2uB5ZrQ==}

@@ -8,4 +8,6 @@ export type UpdateProjectDto = {
     url?: string;
     image?: string;
     content?: string;
+    githubUrl?: string;
+    postId?: string;
 };

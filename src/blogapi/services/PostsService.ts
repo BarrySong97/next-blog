@@ -41,6 +41,17 @@ requestBody: CreatePostDto,
     }
 
     /**
+     * @returns PostDTO 
+     * @throws ApiError
+     */
+    public static postControllerFindRecent(): CancelablePromise<Array<PostDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/posts/recent',
+        });
+    }
+
+    /**
      * @param id 
      * @returns any 
      * @returns PostDTO 

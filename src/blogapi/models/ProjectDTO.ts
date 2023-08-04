@@ -13,5 +13,6 @@ export type ProjectDTO = {
     url: string;
     image: string;
     content: string;
+    github: string;
     post: PostDTO;
 };

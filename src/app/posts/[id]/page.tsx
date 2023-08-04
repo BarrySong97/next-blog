@@ -14,6 +14,7 @@ import remarkToc from "remark-toc";
 import markdown from "remark-parse";
 import { MdastNodes } from "mdast-util-to-hast/lib/state";
 import axios from "axios";
+import Image from "next/image";
 const PostDetail = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [toc, setToc] = useState<
@@ -55,17 +56,20 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   return (
     <Sheet>
       <div className="flex justify-center">
-        <img
-          src={data?.cover}
-          alt="Picture of the author"
+        <Image
+          height={250}
+          width={250}
+          src={data?.cover ?? ""}
+          alt={data?.title ?? ""}
           className="object-cover  mb-8 rounded-md w-full"
         />
       </div>
-      <ul className="fixed top-[80px] left-[160px] md:max-w-[300px]   ">
+      <ul className="fixed top-[80px] left-[160px] md:max-w-[240px]   ">
         {toc?.map((item) => {
           return (
             <li
               key={item.title}
+              className="truncate"
               style={{
                 marginLeft: `${(item.depth - 2) * 10}px`,
               }}
@@ -74,7 +78,7 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
                 style={{
                   borderBottom: "1px dashed rgba(125,125,125,.3)",
                 }}
-                className={`text-stone-700 text-sm cursor-pointer ${styles.tocItem}}`}
+                className={`text-stone-700  text-sm cursor-pointer ${styles.tocItem}} `}
                 href={`#${item.title}`}
               >
                 {item.title}
@@ -110,6 +114,9 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
               },
               h3({ node, inline, className, children, ...props }) {
                 return <h3 id={`${node.children?.[0].value}`}>{children}</h3>;
+              },
+              h4({ node, inline, className, children, ...props }) {
+                return <h4 id={`${node.children?.[0].value}`}>{children}</h4>;
               },
             }}
           >

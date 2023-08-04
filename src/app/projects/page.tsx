@@ -5,6 +5,12 @@ import Sheet from "../components/Sheet";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { ProjectDTO } from "@/blogapi";
 import axios from "axios";
+import Image from "next/image";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "项目 - Barry Song's Blog",
+  description: "Barry Song的一些小作品",
+};
 export default async function Projects() {
   const data: ProjectDTO[] = await axios
     .get(`${proxy}/api/projects`)
@@ -22,10 +28,12 @@ export default async function Projects() {
             return (
               <div key={project.name} className="flex">
                 <div className="w-[270px] overflow-hidden rounded-md drop-shadow-lg mr-4">
-                  <img
+                  <Image
+                    height={125}
+                    width={250}
                     className="h-full w-full object-cover"
                     src={project.image}
-                    alt="Landscape photograph by Tobias Tullius"
+                    alt={project.name}
                   />
                 </div>
                 <div className="flex flex-col  justify-between w-1/2">
@@ -43,7 +51,7 @@ export default async function Projects() {
                       {project.url && (
                         <a
                           className="cursor-pointer "
-                          href={project.url}
+                          href={project.github}
                           target="_blank"
                         >
                           <MdiGithub />
@@ -54,18 +62,20 @@ export default async function Projects() {
                       {project.content}
                     </div>
                   </div>
-                  <div className="flex justify-between items-center project-links">
-                    <div className="flex gap-1 items-center">
-                      <a
-                        className="text-xs flex items-center  cursor-pointer mr-1 text-gray-600"
-                        href={project.url}
-                        target="_blank"
-                      >
-                        <span className="mr-1">阅读相关文章</span>
-                        <PajamasExternalLink />
-                      </a>
+                  {project.post && (
+                    <div className="flex justify-between items-center project-links">
+                      <div className="flex gap-1 items-center">
+                        <a
+                          className="text-xs flex items-center  cursor-pointer mr-1 text-gray-600"
+                          href={`/post/${project.post.id}`}
+                          target="_blank"
+                        >
+                          <span className="mr-1">阅读相关文章</span>
+                          <PajamasExternalLink />
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             );

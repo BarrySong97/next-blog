@@ -42,6 +42,17 @@ requestBody: CreatePhotoDto,
     }
 
     /**
+     * @returns PhotoDTO 
+     * @throws ApiError
+     */
+    public static photosControllerFindRecent(): CancelablePromise<Array<PhotoDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/photos/recent',
+        });
+    }
+
+    /**
      * @param requestBody 
      * @returns any 
      * @throws ApiError

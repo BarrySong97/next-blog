@@ -3,6 +3,12 @@ import Sheet from "../components/Sheet";
 import "./styles.css";
 import axios from "axios";
 import { proxy } from "@/blogapi/core/OpenAPI";
+import Image from "next/image";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "照片 - Barry Song's Blog",
+  description: "Barry Song的照片和摄影作品",
+};
 export default async function Home() {
   const data: PhotoDTO[] = await axios
     .get(`${proxy}/api/photos`)
@@ -17,7 +23,10 @@ export default async function Home() {
           {data?.map((img) => {
             return (
               <div key={img.id} className="mb-3  h-[250px] ">
-                <img
+                <Image
+                  alt={"imgs"}
+                  height={250}
+                  width={250}
                   className={"object-cover rounded-md w-full h-full  "}
                   src={img.url}
                 />

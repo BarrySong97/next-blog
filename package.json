@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": " next dev -p 3001",
+    "dev": " next dev -p 3001 --turbo",
     "build": "next build",
     "api:generate": "openapi --input http://localhost:3000/api-json --output ./src/blogapi --exportCore false -c axios",
     "start": "PORT=9000 next start ",
@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "@types/react-lazyload": "^3.2.0",
     "@types/react-syntax-highlighter": "^15.5.7",
     "@types/react-virtualized": "^9.21.22",
     "openapi-typescript-codegen": "^0.25.0",

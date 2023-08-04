@@ -74,7 +74,7 @@ const Navigation: FC<SideBarProps> = () => {
     },
   ];
   const pathname = usePathname();
-  const [activeKey, setActiveKey] = useState<string>("/");
+  const [activeKey, setActiveKey] = useState<string>(pathname);
   return (
     <nav className="w-full py-4 z-50 bg-white items-center px-6 sticky top-0 flex justify-between">
       <ul className="relative flex gap-2">

@@ -6,6 +6,13 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import axios from "axios";
 import { proxy } from "@/blogapi/core/OpenAPI";
+import Image from "next/image";
+import { Metadata } from "next";
+export const revalidate = 1000;
+export const metadata: Metadata = {
+  title: "文章列表 - Barry Song's Blog",
+  description: "Barry Song的博客文章列表",
+};
 export type PostItemProps = {
   title: string;
   date: string;
@@ -30,9 +37,12 @@ export function PostItem({
   const _date = dayjs(date).format("YYYY/MM/DD");
   return (
     <Link className={_className} style={style} href={`/posts/${id}`}>
-      <img
+      <Image
+        height={250}
+        width={250}
         src={cover}
         className="rounded-lg aspect-[240/135] w-full object-cover"
+        alt={title}
       />
       <div className={styles.articleInfo}>
         <div className="relative px-4 py-1  text-white rounded-b-lg">
@@ -43,8 +53,11 @@ export function PostItem({
     </Link>
   );
 }
+
 export default async function Posts() {
-  const data: PostDTO[] = await axios.get(`${proxy}/api/posts`).then((res) => res.data);
+  const data: PostDTO[] = await axios
+    .get(`${proxy}/api/posts`)
+    .then((res) => res.data);
   return (
     <Sheet>
       <main className={`${styles.articleList} mb-4 p-1`}>
@@ -53,7 +66,7 @@ export default async function Posts() {
           分享我的看法，记录我的思想
         </p>
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
-          {data?.map((post) => {
+          {data.map((post) => {
             return (
               <PostItem
                 key={post.id}
