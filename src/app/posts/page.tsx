@@ -1,13 +1,11 @@
-"use client";
 import classNames from "classnames";
 import Sheet from "../components/Sheet";
 import styles from "./index.module.scss";
-import { Suspense } from "react";
 import { PostDTO } from "@/blogapi";
 import dayjs from "dayjs";
 import Link from "next/link";
 import axios from "axios";
-import { useRequest } from "ahooks";
+import { proxy } from "@/blogapi/core/OpenAPI";
 export type PostItemProps = {
   title: string;
   date: string;
@@ -45,10 +43,8 @@ export function PostItem({
     </Link>
   );
 }
-export default function Posts() {
-  const { data } = useRequest<PostDTO[], any>(() =>
-    axios.get(`/api/posts`).then((res) => res.data)
-  );
+export default async function Posts() {
+  const data: PostDTO[] = await axios.get(`${proxy}/api/posts`).then((res) => res.data);
   return (
     <Sheet>
       <main className={`${styles.articleList} mb-4 p-1`}>

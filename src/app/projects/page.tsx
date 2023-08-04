@@ -1,24 +1,14 @@
-"use client";
-import * as AspectRatio from "@radix-ui/react-aspect-ratio";
-import { useRequest } from "ahooks";
 import "./styles.css";
 import { PajamasExternalLink } from "./icones";
 import { MdiGithub } from "../components/SideBar/icons";
 import Sheet from "../components/Sheet";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { ProjectDTO } from "@/blogapi";
-type Project = {
-  name: string;
-  description: string;
-  link: string;
-  preview: string;
-  github?: string;
-};
-export default function Projects() {
-
-  const { data } = useRequest<ProjectDTO[], any>(() => {
-    return fetch(`/api/projects`).then((res) => res.json());
-  });
+import axios from "axios";
+export default async function Projects() {
+  const data: ProjectDTO[] = await axios
+    .get(`${proxy}/api/projects`)
+    .then((res) => res.data);
 
   return (
     <Sheet>
@@ -32,13 +22,11 @@ export default function Projects() {
             return (
               <div key={project.name} className="flex">
                 <div className="w-[270px] overflow-hidden rounded-md drop-shadow-lg mr-4">
-                  <AspectRatio.Root ratio={16 / 9}>
-                    <img
-                      className="h-full w-full object-cover"
-                      src={project.image}
-                      alt="Landscape photograph by Tobias Tullius"
-                    />
-                  </AspectRatio.Root>
+                  <img
+                    className="h-full w-full object-cover"
+                    src={project.image}
+                    alt="Landscape photograph by Tobias Tullius"
+                  />
                 </div>
                 <div className="flex flex-col  justify-between w-1/2">
                   <div className="text-base text-stone-950 font-bold mb-2">

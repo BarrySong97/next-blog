@@ -1,15 +1,13 @@
-"use client";
-import "./styles.css";
-import { Image } from "@douyinfe/semi-ui";
-import Sheet from "../components/Sheet";
 import { PhotoDTO } from "@/blogapi";
-import { proxy } from "@/blogapi/core/OpenAPI";
-import { useRequest } from "ahooks";
+import Sheet from "../components/Sheet";
+import "./styles.css";
 import axios from "axios";
-export default function Home() {
-  const { data } = useRequest<PhotoDTO[], any>(() =>
-    axios.get(`/api/photos`).then((res) => res.data)
-  );
+import { proxy } from "@/blogapi/core/OpenAPI";
+export default async function Home() {
+  const data: PhotoDTO[] = await axios
+    .get(`${proxy}/api/photos`)
+    .then((res) => res.data);
+
   return (
     <Sheet>
       <main className="p-1 photos">
@@ -19,7 +17,7 @@ export default function Home() {
           {data?.map((img) => {
             return (
               <div key={img.id} className="mb-3  h-[250px] ">
-                <Image
+                <img
                   className={"object-cover rounded-md w-full h-full  "}
                   src={img.url}
                 />

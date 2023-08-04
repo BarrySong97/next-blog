@@ -1,7 +1,6 @@
 import { proxy } from "@/blogapi/core/OpenAPI";
 import axios from "axios";
 import { NextResponse } from "next/server";
-export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
@@ -16,6 +15,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } catch (error) {
-    // return NextResponse.json(error);
+    return NextResponse.json(error);
   }
 }

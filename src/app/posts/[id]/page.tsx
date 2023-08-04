@@ -1,9 +1,8 @@
 "use client";
 import Sheet from "@/app/components/Sheet";
 import { PostDTO } from "@/blogapi";
-import { proxy } from "@/blogapi/core/OpenAPI";
 import { useRequest } from "ahooks";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import styles from "./index.module.scss";
 import "./markdown.css";
 import { unified } from "unified";
@@ -47,7 +46,6 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
             const title = hastToString(tohast as any);
             return { title, depth: item.depth };
           });
-          console.log(tocItems);
 
           setToc(tocItems);
         }
@@ -56,71 +54,69 @@ const PostDetail = ({ params }: { params: { id: string } }) => {
   );
   return (
     <Sheet>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="flex justify-center">
-          <img
-            src={data?.cover}
-            alt="Picture of the author"
-            className="object-cover  mb-8 rounded-md w-full"
-          />
-        </div>
-        <ul className="fixed top-[80px] left-[160px] md:max-w-[300px]   ">
-          {toc?.map((item) => {
-            return (
-              <li
-                key={item.title}
-                style={{
-                  marginLeft: `${(item.depth - 2) * 10}px`,
-                }}
-              >
-                <a
-                  style={{
-                    borderBottom: "1px dashed rgba(125,125,125,.3)",
-                  }}
-                  className={`text-stone-700 text-sm cursor-pointer ${styles.tocItem}}`}
-                  href={`#${item.title}`}
-                >
-                  {item.title}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-        <div>
-          <article className="wmde-markdown ">
-            <h1>{data?.title}</h1>
-            <ReactMarkdown
-              remarkPlugins={[[remarkToc]]}
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || "");
-                  return !inline && match ? (
-                    <CodeBlock
-                      key={Math.random()}
-                      language={match[1]}
-                      value={String(children).replace(/\n$/, "")}
-                      lightMode={"dark"}
-                      {...props}
-                    />
-                  ) : (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  );
-                },
-                h2({ node, inline, className, children, ...props }) {
-                  return <h2 id={`${node.children?.[0].value}`}>{children}</h2>;
-                },
-                h3({ node, inline, className, children, ...props }) {
-                  return <h3 id={`${node.children?.[0].value}`}>{children}</h3>;
-                },
+      <div className="flex justify-center">
+        <img
+          src={data?.cover}
+          alt="Picture of the author"
+          className="object-cover  mb-8 rounded-md w-full"
+        />
+      </div>
+      <ul className="fixed top-[80px] left-[160px] md:max-w-[300px]   ">
+        {toc?.map((item) => {
+          return (
+            <li
+              key={item.title}
+              style={{
+                marginLeft: `${(item.depth - 2) * 10}px`,
               }}
             >
-              {data?.content}
-            </ReactMarkdown>
-          </article>
-        </div>
-      </Suspense>
+              <a
+                style={{
+                  borderBottom: "1px dashed rgba(125,125,125,.3)",
+                }}
+                className={`text-stone-700 text-sm cursor-pointer ${styles.tocItem}}`}
+                href={`#${item.title}`}
+              >
+                {item.title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <div>
+        <article className="wmde-markdown ">
+          <h1>{data?.title}</h1>
+          <ReactMarkdown
+            remarkPlugins={[[remarkToc]]}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return !inline && match ? (
+                  <CodeBlock
+                    key={Math.random()}
+                    language={match[1]}
+                    value={String(children).replace(/\n$/, "")}
+                    lightMode={"dark"}
+                    {...props}
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+              h2({ node, inline, className, children, ...props }) {
+                return <h2 id={`${node.children?.[0].value}`}>{children}</h2>;
+              },
+              h3({ node, inline, className, children, ...props }) {
+                return <h3 id={`${node.children?.[0].value}`}>{children}</h3>;
+              },
+            }}
+          >
+            {data?.content}
+          </ReactMarkdown>
+        </article>
+      </div>
     </Sheet>
   );
 };

@@ -1,4 +1,3 @@
-"use client";
 import { Image } from "@douyinfe/semi-ui";
 import Sheet from "./components/Sheet";
 import styles from "./page.module.scss";
@@ -8,13 +7,14 @@ import { useRequest } from "ahooks";
 import { PhotoDTO, PostDTO } from "@/blogapi";
 import axios from "axios";
 
-export default function Home() {
-  const { data: imgs } = useRequest<PhotoDTO[], any>(() =>
-    axios.get(`/api/photos?recent=true`).then((res) => res.data)
-  );
-  const { data: PostList } = useRequest<PostDTO[], any>(() =>
-    axios.get(`/api/posts?recent=true`).then((res) => res.data)
-  );
+export default async function Home() {
+  const imgs: PhotoDTO[] = await axios
+    .get(`${proxy}/api/photos?recent=true`)
+    .then((res) => res.data);
+  const PostList: PostDTO[] = await axios
+    .get(`${proxy}/api/posts?recent=true`)
+    .then((res) => res.data);
+
   const gallery = [
     "col-[span_2_] row-[span_2_]",
     "col-[span_2_] row-[span_1_]",
@@ -61,7 +61,7 @@ export default function Home() {
           {imgs?.reverse().map((img, idx) => {
             const imgClassName = gallery[idx];
             return (
-              <Image
+              <img
                 key={img.id}
                 className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
                 src={img.url}
