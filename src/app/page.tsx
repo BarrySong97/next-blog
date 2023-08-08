@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Barry Song的个人博客, 分享我的生活和code",
 };
 
-export const revalidate = 3600;
+export const revalidate = 1000;
 export default async function Home() {
   const imgs: PhotoDTO[] = await axios
     .get(`${proxy}/photos?recent=true`)

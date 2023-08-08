@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "文章列表 - Barry Song's Blog",
   description: "Barry Song的博客文章列表",
 };
-export const revalidate = 3600;
+export const revalidate = 1000;
 export type PostItemProps = {
   title: string;
   date: string;

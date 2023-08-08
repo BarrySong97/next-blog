@@ -14,7 +14,7 @@ import "highlight.js/styles/atom-one-dark.css";
 import htmlParser from "html-react-parser";
 import { CodeBlock } from "@/app/components/CodeBlock";
 import PageActions from "./components/PageActions";
-export const revalidate = 3600;
+export const revalidate = 1000;
 export async function generateMetadata(
   { params }: { params: { id: string } },
   parent: ResolvingMetadata

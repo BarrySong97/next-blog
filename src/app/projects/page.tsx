@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "项目 - Barry Song's Blog",
   description: "Barry Song的一些小作品",
 };
-export const revalidate = 3600;
+export const revalidate = 1000;
 export default async function Projects() {
   const data: ProjectDTO[] = await axios
     .get(`${proxy}/projects`)

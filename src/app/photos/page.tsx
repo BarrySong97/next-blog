@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "照片 - Barry Song's Blog",
   description: "Barry Song的照片和摄影作品",
 };
-export const revalidate = 3600;
+export const revalidate = 1000;
 export default async function Home() {
   const data: PhotoDTO[] = await axios
     .get(`${proxy}/photos`)
