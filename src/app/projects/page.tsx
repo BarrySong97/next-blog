@@ -11,9 +11,10 @@ export const metadata: Metadata = {
   title: "项目 - Barry Song's Blog",
   description: "Barry Song的一些小作品",
 };
+export const revalidate = 3600;
 export default async function Projects() {
   const data: ProjectDTO[] = await axios
-    .get(`${proxy}/api/projects`)
+    .get(`${proxy}/projects`)
     .then((res) => res.data);
 
   return (
@@ -32,7 +33,7 @@ export default async function Projects() {
                     height={125}
                     width={250}
                     className="h-full w-full object-cover"
-                    src={project.image}
+                    src={project.image ?? ""}
                     alt={project.name}
                   />
                 </div>

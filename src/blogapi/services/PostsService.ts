@@ -53,13 +53,12 @@ requestBody: CreatePostDto,
 
     /**
      * @param id 
-     * @returns any 
      * @returns PostDTO 
      * @throws ApiError
      */
     public static postControllerFindOne(
 id: string,
-): CancelablePromise<any | PostDTO> {
+): CancelablePromise<PostDTO> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/posts/{id}',

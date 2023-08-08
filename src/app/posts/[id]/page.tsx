@@ -1,129 +1,121 @@
-"use client";
 import Sheet from "@/app/components/Sheet";
 import { PostDTO } from "@/blogapi";
-import { useRequest } from "ahooks";
-import { useState } from "react";
-import styles from "./index.module.scss";
+import { Suspense } from "react";
 import "./markdown.css";
-import { unified } from "unified";
-import ReactMarkdown from "react-markdown";
-import { toString as hastToString } from "hast-util-to-string";
-import { toHast } from "mdast-util-to-hast";
-import { CodeBlock } from "@/app/components/CodeBlock";
-import remarkToc from "remark-toc";
-import markdown from "remark-parse";
-import { MdastNodes } from "mdast-util-to-hast/lib/state";
 import axios from "axios";
 import Image from "next/image";
-const PostDetail = ({ params }: { params: { id: string } }) => {
+import { proxy } from "@/blogapi/core/OpenAPI";
+import styles from "./index.module.scss";
+import Error from "./errot";
+import { Metadata, ResolvingMetadata } from "next";
+import * as cheerio from "cheerio";
+import hljs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
+import htmlParser from "html-react-parser";
+import { CodeBlock } from "@/app/components/CodeBlock";
+import PageActions from "./components/PageActions";
+export const revalidate = 3600;
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+
+  // fetch data
+  const post: PostDTO = await axios
+    .get(`${proxy}/posts/${id}`)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+  // optionally access and extend (rather than replace) parent metadata
+
+  return {
+    title: `${post.title} - Barry Song's Blog`,
+  };
+}
+export const PostDetail = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const [toc, setToc] = useState<
-    { title: string; depth: number }[] | undefined
-  >([]);
-  const { data } = useRequest<PostDTO, any>(
-    () => axios.get(`/api/posts/${id}`).then((res) => res.data),
-    {
-      onSuccess: (data) => {
-        if (data) {
-          const markdownContent = data.content;
-          const processor = unified().use(markdown);
 
-          // Add the toc plugin to the processor to generate a table of contents
-          processor.use(remarkToc, {
-            heading: "Table of Contents",
-            tight: true,
-            maxDepth: 3,
-          });
+  const data: PostDTO | undefined = await axios
+    .get(`${proxy}/posts/${id}`)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
 
-          // Parse the markdown and generate a table of contents
-          const tree = processor.parse(markdownContent);
-
-          const tocNode = tree.children.filter(
-            (node) => node.type === "heading"
-          );
-
-          const tocItems = tocNode.map((item) => {
-            const tohast = toHast(item as unknown as MdastNodes);
-            const title = hastToString(tohast as any);
-            return { title, depth: item.depth };
-          });
-
-          setToc(tocItems);
-        }
-      },
-    }
+  const toc = JSON.parse(
+    data?.toc ??
+      JSON.stringify([
+        {
+          content: "top",
+          anchor: "top",
+        },
+      ])
   );
+
+  const htmlString = data?.html;
+  const htmlReactElement = htmlParser(htmlString ?? "", {
+    replace: (domNode) => {
+      if (domNode.name === "pre") {
+        const code = domNode.children[0].children[0].data;
+
+        const className = domNode.children[0].attribs.class;
+        const language = className?.replace("language-", "") ?? "";
+        return <CodeBlock lightMode="dark" language={language} value={code} />;
+      }
+    },
+  });
+
+  // const article = { __html: $.html() ?? "" };
   return (
     <Sheet>
-      <div className="flex justify-center">
-        <Image
-          height={250}
-          width={250}
-          src={data?.cover ?? ""}
-          alt={data?.title ?? ""}
-          className="object-cover  mb-8 rounded-md w-full"
-        />
-      </div>
-      <ul className="fixed top-[80px] left-[160px] md:max-w-[240px]   ">
-        {toc?.map((item) => {
-          return (
-            <li
-              key={item.title}
-              className="truncate"
-              style={{
-                marginLeft: `${(item.depth - 2) * 10}px`,
-              }}
-            >
-              <a
-                style={{
-                  borderBottom: "1px dashed rgba(125,125,125,.3)",
-                }}
-                className={`text-stone-700  text-sm cursor-pointer ${styles.tocItem}} `}
-                href={`#${item.title}`}
-              >
-                {item.title}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-      <div>
-        <article className="wmde-markdown ">
-          <h1>{data?.title}</h1>
-          <ReactMarkdown
-            remarkPlugins={[[remarkToc]]}
-            components={{
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || "");
-                return !inline && match ? (
-                  <CodeBlock
-                    key={Math.random()}
-                    language={match[1]}
-                    value={String(children).replace(/\n$/, "")}
-                    lightMode={"dark"}
-                    {...props}
-                  />
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-              h2({ node, inline, className, children, ...props }) {
-                return <h2 id={`${node.children?.[0].value}`}>{children}</h2>;
-              },
-              h3({ node, inline, className, children, ...props }) {
-                return <h3 id={`${node.children?.[0].value}`}>{children}</h3>;
-              },
-              h4({ node, inline, className, children, ...props }) {
-                return <h4 id={`${node.children?.[0].value}`}>{children}</h4>;
-              },
-            }}
-          >
-            {data?.content}
-          </ReactMarkdown>
-        </article>
-      </div>
+      <Suspense fallback={<Error />}>
+        <div className="flex justify-center">
+          <Image
+            height={100}
+            width={250}
+            src={data?.cover ?? ""}
+            alt={data?.title ?? ""}
+            className="object-cover  mb-8 rounded-md w-full"
+          />
+        </div>
+        <div className="fixed top-[80px] left-[160px] md:max-w-[240px] flex flex-col justify-between bottom-[80px]   ">
+          <ul>
+            {toc?.map((item) => {
+              return (
+                <li
+                  key={item.anchor}
+                  className="truncate"
+                  style={{
+                    marginLeft: `${(item.level - 2) * 10}px`,
+                  }}
+                >
+                  <a
+                    style={{
+                      borderBottom: "1px dashed rgba(125,125,125,.3)",
+                    }}
+                    className={`text-stone-700  text-sm cursor-pointer ${styles.tocItem}} `}
+                    href={`#${item.anchor}`}
+                  >
+                    {item.anchor}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+          <PageActions />
+        </div>
+        <div>
+          <article className="wmde-markdown ">
+            <h1 className="mb-4">{data?.title}</h1>
+            <div>
+              <>{htmlReactElement}</>
+            </div>
+          </article>
+        </div>
+      </Suspense>
     </Sheet>
   );
 };

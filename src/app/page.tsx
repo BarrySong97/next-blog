@@ -12,12 +12,13 @@ export const metadata: Metadata = {
   description: "Barry Song的个人博客, 分享我的生活和code",
 };
 
+export const revalidate = 3600;
 export default async function Home() {
   const imgs: PhotoDTO[] = await axios
-    .get(`${proxy}/api/photos?recent=true`)
+    .get(`${proxy}/photos?recent=true`)
     .then((res) => res.data);
   const PostList: PostDTO[] = await axios
-    .get(`${proxy}/api/posts?recent=true`)
+    .get(`${proxy}/posts?recent=true`)
     .then((res) => res.data);
 
   const gallery = [
@@ -72,7 +73,7 @@ export default async function Home() {
                   width={250}
                   key={img.id}
                   className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
-                  src={img.url}
+                  src={img.url ?? ""}
                   alt={"imgs"}
                 />
               );

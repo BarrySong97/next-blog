@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "文章列表 - Barry Song's Blog",
   description: "Barry Song的博客文章列表",
 };
+export const revalidate = 3600;
 export type PostItemProps = {
   title: string;
   date: string;
@@ -39,7 +40,7 @@ export function PostItem({
       <Image
         height={250}
         width={250}
-        src={cover}
+        src={cover ?? ""}
         className="rounded-lg aspect-[240/135] w-full object-cover"
         alt={title}
       />
@@ -55,8 +56,9 @@ export function PostItem({
 
 export default async function Posts() {
   const data: PostDTO[] = await axios
-    .get(`${proxy}/api/posts`)
+    .get(`${proxy}/posts`)
     .then((res) => res.data);
+
   return (
     <Sheet>
       <main className={`${styles.articleList} mb-4 p-1`}>

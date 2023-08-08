@@ -9,4 +9,6 @@ export type UpdatePostDto = {
     authorId?: string;
     categoryId?: string;
     cover?: string;
+    html?: string;
+    toc?: string;
 };

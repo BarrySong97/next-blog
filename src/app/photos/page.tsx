@@ -9,9 +9,10 @@ export const metadata: Metadata = {
   title: "照片 - Barry Song's Blog",
   description: "Barry Song的照片和摄影作品",
 };
+export const revalidate = 3600;
 export default async function Home() {
   const data: PhotoDTO[] = await axios
-    .get(`${proxy}/api/photos`)
+    .get(`${proxy}/photos`)
     .then((res) => res.data);
 
   return (
@@ -28,7 +29,7 @@ export default async function Home() {
                   height={250}
                   width={250}
                   className={"object-cover rounded-md w-full h-full  "}
-                  src={img.url}
+                  src={img.url ?? ""}
                 />
               </div>
             );

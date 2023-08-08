@@ -26,7 +26,7 @@
 }
 
 .wmde-markdown blockquote {
-  @apply mt-6 border-l-2 pl-6  !important;
+  @apply mt-6 border-l-2 pl-6 !important;
 }
 
 
@@ -75,10 +75,18 @@
 }
 
 .wmde-markdown li {
-  @apply  mt-2 !important;
+  @apply mt-2 !important;
 }
 
 .wmde-markdown a {
   @apply font-medium text-primary underline underline-offset-4 !important;
   cursor: pointer;
+}
+
+pre {
+  color: #a9b7c6;
+  background: #282b2e;
+  margin-top: 12px ;
+  padding: 12px;
+  border-radius: 6px;
 }

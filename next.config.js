@@ -14,6 +14,10 @@ const nextConfig = {
         hostname: "pic.imgdb.cn",
       },
       {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
         protocol: "https",
         hostname: "cdn.hashnode.com",
       },

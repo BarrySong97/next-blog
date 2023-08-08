@@ -12,12 +12,6 @@ COPY . .
 
 RUN pnpm run build
 
-FROM node:16
-
-WORKDIR /app
-
-COPY --from=builder /app ./
-EXPOSE 9000
-
 # 启动应用
-CMD ["npm", "start"]
+EXPOSE 9000
+CMD ["pnpm", "start"]
