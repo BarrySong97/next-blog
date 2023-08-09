@@ -29,7 +29,6 @@ export default async function Home() {
                   height={250}
                   width={250}
                   unoptimized
-                  blurDataURL={}
                   className={"object-cover rounded-md w-full h-full  "}
                   src={img.url ?? ""}
                 />
