@@ -36,14 +36,14 @@ const Navigation: FC<SideBarProps> = () => {
       link: "/posts",
     },
     {
-      title: "项目",
-      icon: <UimBox />,
-      link: "/projects",
-    },
-    {
       title: "照片",
       icon: <NotoCameraWithFlash />,
       link: "/photos",
+    },
+    {
+      title: "项目",
+      icon: <UimBox />,
+      link: "/projects",
     },
     // {
     //   title: "简历",

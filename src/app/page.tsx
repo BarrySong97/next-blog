@@ -1,12 +1,12 @@
 import Sheet from "./components/Sheet";
 import styles from "./page.module.scss";
-import { PostItem } from "./posts/page";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { PhotoDTO, PostDTO } from "@/blogapi";
 import axios from "axios";
 import Image from "next/image";
 import { Metadata } from "next";
 import { Suspense } from "react";
+import PostItem from "./posts/components/PostItem";
 export const metadata: Metadata = {
   title: "Barry Song's Blog",
   description: "Barry Song的个人博客, 分享我的生活和code",
@@ -72,6 +72,7 @@ export default async function Home() {
                   height={250}
                   width={250}
                   key={img.id}
+                  unoptimized
                   className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
                   src={img.url ?? ""}
                   alt={"imgs"}

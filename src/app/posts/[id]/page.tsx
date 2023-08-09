@@ -8,8 +8,6 @@ import { proxy } from "@/blogapi/core/OpenAPI";
 import styles from "./index.module.scss";
 import Error from "./errot";
 import { Metadata, ResolvingMetadata } from "next";
-import * as cheerio from "cheerio";
-import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import htmlParser from "html-react-parser";
 import { CodeBlock } from "@/app/components/CodeBlock";

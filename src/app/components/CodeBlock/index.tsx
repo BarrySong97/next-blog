@@ -2,7 +2,7 @@
 import { FC, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-
+import copy from "copy-to-clipboard";
 interface Props {
   language: string;
   value: string;
@@ -13,17 +13,13 @@ export const CodeBlock: FC<Props> = ({ language, value, lightMode }) => {
   const [buttonText, setButtonText] = useState("Copy code");
 
   const copyToClipboard = () => {
-    if (!navigator.clipboard || !navigator.clipboard.writeText) {
-      return;
-    }
+    copy(value);
 
-    navigator.clipboard.writeText(value).then(() => {
-      setButtonText("Copied!");
+    setButtonText("Copied!");
 
-      setTimeout(() => {
-        setButtonText("Copy code");
-      }, 2000);
-    });
+    setTimeout(() => {
+      setButtonText("Copy code");
+    }, 2000);
   };
 
   return (
@@ -44,7 +40,7 @@ export const CodeBlock: FC<Props> = ({ language, value, lightMode }) => {
         language={language}
         style={oneDark}
         customStyle={{
-          marginTop: 0
+          marginTop: 0,
         }}
       >
         {value}
