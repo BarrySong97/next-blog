@@ -12,6 +12,7 @@ import "highlight.js/styles/atom-one-dark.css";
 import htmlParser from "html-react-parser";
 import { CodeBlock } from "@/app/components/CodeBlock";
 import PageActions from "./components/PageActions";
+import ImageViewer from "@/app/components/ImageView";
 export const revalidate = 1000;
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -33,9 +34,15 @@ export async function generateMetadata(
     title: `${post.title} - Barry Song's Blog`,
   };
 }
-export const PostDetail = async ({ params }: { params: { id: string } }) => {
+export const PostDetail = async ({
+  params,
+  searchParams,
+}: {
+  searchParams: { came: string };
+  params: { id: string };
+}) => {
   const { id } = params;
-
+  const { came } = searchParams;
   const data: PostDTO | undefined = await axios
     .get(`${proxy}/posts/${id}`)
     .then((res) => res.data)
@@ -63,6 +70,16 @@ export const PostDetail = async ({ params }: { params: { id: string } }) => {
         const language = className?.replace("language-", "") ?? "";
         return <CodeBlock lightMode="dark" language={language} value={code} />;
       }
+      if (domNode.name === "img") {
+        // const code = domNode.src;
+
+        return (
+          <ImageViewer
+            src={domNode.attribs.src}
+            className="object-cover w-full  mb-8 rounded-md  cursor-pointer"
+          />
+        );
+      }
     },
   });
 
@@ -71,17 +88,15 @@ export const PostDetail = async ({ params }: { params: { id: string } }) => {
     <Sheet>
       <Suspense fallback={<Error />}>
         <div className="flex justify-center">
-          <Image
-            height={100}
-            width={250}
+          <ImageViewer
             src={data?.cover ?? ""}
-            alt={data?.title ?? ""}
-            className="object-cover  mb-8 rounded-md w-full"
+            className="object-cover  mb-8 rounded-md w-full h-full cursor-pointer"
           />
         </div>
         <div className="fixed top-[80px] left-[160px] md:max-w-[240px] flex flex-col justify-between bottom-[80px]   ">
           <ul>
             {toc?.map((item) => {
+              
               return (
                 <li
                   key={item.anchor}
@@ -95,15 +110,15 @@ export const PostDetail = async ({ params }: { params: { id: string } }) => {
                       borderBottom: "1px dashed rgba(125,125,125,.3)",
                     }}
                     className={`text-stone-700  text-sm cursor-pointer ${styles.tocItem}} `}
-                    href={`#${item.anchor}`}
+                    href={`#${item.anchor.toLowerCase()}`}
                   >
-                    {item.anchor}
+                    {item.content}
                   </a>
                 </li>
               );
             })}
           </ul>
-          <PageActions />
+          <PageActions backPath={came} />
         </div>
         <div>
           <article className="wmde-markdown ">

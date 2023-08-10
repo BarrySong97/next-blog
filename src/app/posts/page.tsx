@@ -28,6 +28,7 @@ export default async function Posts() {
             return (
               <PostItem
                 key={post.id}
+                came={'posts'}
                 date={post.createdAt}
                 id={post.id}
                 title={post.title}

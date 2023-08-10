@@ -21,4 +21,15 @@ export class AppService {
         });
     }
 
+    /**
+     * @returns any 
+     * @throws ApiError
+     */
+    public static appControllerGetOssAuthKey(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/ossKey',
+        });
+    }
+
 }

@@ -24,7 +24,7 @@ export default async function Projects() {
         <p className="text-stone-400 mb-6 text-xs">
           一些微小的项目，用来帮助自己提升效率
         </p>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-1 md:grid-cols-2 ">
+        <div className="grid  gap-8 grid-cols-1 md:grid-cols-2 ">
           {data?.map((project) => {
             return (
               <div key={project.name} className="flex">
@@ -59,7 +59,7 @@ export default async function Projects() {
                         </a>
                       )}
                     </div>
-                    <div className="text-xs mb-2 text-gray-500">
+                    <div className="text-xs mb-2 text-gray-500 break-words whitespace-break-spaces">
                       {project.content}
                     </div>
                   </div>

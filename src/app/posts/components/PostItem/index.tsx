@@ -9,6 +9,7 @@ export type PostItemProps = {
   cover: string;
   className?: string;
   style?: React.CSSProperties;
+  came: 'home' | 'posts';
   id: string;
 };
 export default function PostItem({
@@ -17,6 +18,7 @@ export default function PostItem({
   style,
   date,
   cover,
+  came,
   id,
 }: PostItemProps) {
   const _className = classNames(
@@ -26,7 +28,7 @@ export default function PostItem({
   );
   const _date = dayjs(date).format("YYYY/MM/DD");
   return (
-    <Link className={_className} style={style} href={`/posts/${id}`}>
+    <Link className={_className} style={style} href={`/posts/${id}?came=${came}`}>
       <Image
         height={250}
         width={250}

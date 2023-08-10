@@ -12,6 +12,7 @@ export type { CreatePostDto } from './models/CreatePostDto';
 export type { CreateProjectDto } from './models/CreateProjectDto';
 export type { CreateSettingDto } from './models/CreateSettingDto';
 export type { DashboardDataDTO } from './models/DashboardDataDTO';
+export type { Layout } from './models/Layout';
 export type { PhotoDTO } from './models/PhotoDTO';
 export type { PostDTO } from './models/PostDTO';
 export type { ProjectDTO } from './models/ProjectDTO';

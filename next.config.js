@@ -7,6 +7,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+
   images: {
     remotePatterns: [
       {

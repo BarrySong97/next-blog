@@ -12,7 +12,7 @@ const Sheet: FC<SheetProps> = ({ children }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 100 }}
       transition={{ duration: 0.4 }}
-      className="  mx-2   w-full rounded-md p-4 "
+      className="     w-full rounded-md px-3 pb-4 sm:p-4 sm:px-6 sm:pt-0"
     >
       {children}
     </motion.div>

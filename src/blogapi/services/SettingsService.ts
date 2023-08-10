@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CreateSettingDto } from '../models/CreateSettingDto';
+import type { Layout } from '../models/Layout';
 import type { SettingDto } from '../models/SettingDto';
 import type { UpdateSettingDto } from '../models/UpdateSettingDto';
 
@@ -36,6 +37,22 @@ requestBody: CreateSettingDto,
         return __request(OpenAPI, {
             method: 'GET',
             url: '/settings',
+        });
+    }
+
+    /**
+     * @param requestBody 
+     * @returns SettingDto 
+     * @throws ApiError
+     */
+    public static settingsControllerAddPhotoLayout(
+requestBody: Array<Layout>,
+): CancelablePromise<SettingDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/settings/photo',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

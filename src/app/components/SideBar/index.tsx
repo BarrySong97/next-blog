@@ -76,7 +76,7 @@ const Navigation: FC<SideBarProps> = () => {
   const pathname = usePathname();
   const [activeKey, setActiveKey] = useState<string>(pathname);
   return (
-    <nav className="w-full py-4 z-50 bg-white items-center px-6 sticky top-0 flex justify-between">
+    <nav className="w-full py-4 z-50 bg-white items-center px-2 sm:px-6 sticky top-0 flex justify-between">
       <ul className="relative flex gap-2">
         {menuItems.map((item) => {
           const isActive = activeKey === item.link;
@@ -99,7 +99,7 @@ const Navigation: FC<SideBarProps> = () => {
                 </span> */}
                 <span
                   style={{ zIndex: 100 }}
-                  className={`font-bold text-sm hover:text-stone-900 ${
+                  className={`font-bold sm:text-sm text-xs hover:text-stone-900 ${
                     isActive ? "text-stone-900" : "text-stone-400"
                   }`}
                 >
@@ -113,15 +113,13 @@ const Navigation: FC<SideBarProps> = () => {
       <ul className="flex gap-4 justify-between text-lg">
         {contactItems.map((item) => (
           <li key={item.title}>
-            <SoicalCard type={item.title}>
-              <a
-                href={item.link}
-                target="_blank"
-                className="text-stone-600 cursor-pointer hover:text-stone-950"
-              >
-                {item.icon}
-              </a>
-            </SoicalCard>
+            <a
+              href={item.link}
+              target="_blank"
+              className="text-stone-600 cursor-pointer hover:text-stone-950"
+            >
+              {item.icon}
+            </a>
           </li>
         ))}
       </ul>

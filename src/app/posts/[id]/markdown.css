@@ -18,6 +18,7 @@
 
 .wmde-markdown h4 {
   @apply scroll-m-20 text-xl font-semibold tracking-tight border-none !important;
+  margin-top: 12px;
 }
 
 

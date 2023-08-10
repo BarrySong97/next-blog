@@ -13,6 +13,7 @@ export type SettingDto = {
     weiboAvatar: string;
     bilibili: string;
     bilibiliAvatar: string;
+    photoLayout: string;
     twitter: string;
     twitterAvatar: string;
 };

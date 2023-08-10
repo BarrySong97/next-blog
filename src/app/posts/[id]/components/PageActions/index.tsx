@@ -3,15 +3,18 @@ import { SolarArrowToTopLeftBold, TablerArrowBackUp } from "@/app/posts/icons";
 import React, { FC } from "react";
 import { useRouter } from "next/navigation";
 
-export interface PageActionsProps {}
-const PageActions: FC<PageActionsProps> = () => {
+export interface PageActionsProps {
+  backPath: string;
+}
+const PageActions: FC<PageActionsProps> = ({ backPath }) => {
   const router = useRouter();
   const actionList = [
     {
       icon: <TablerArrowBackUp className="cursor-pointer text-2xl " />,
       key: "back",
       onClick: () => {
-        router.back();
+        const path = backPath === "posts" ? "/posts" : "/";
+        router.replace(path);
       },
     },
     {

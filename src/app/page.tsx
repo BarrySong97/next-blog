@@ -1,12 +1,13 @@
 import Sheet from "./components/Sheet";
 import styles from "./page.module.scss";
 import { proxy } from "@/blogapi/core/OpenAPI";
-import { PhotoDTO, PostDTO } from "@/blogapi";
+import { PhotoDTO, PostDTO, SettingDto } from "@/blogapi";
 import axios from "axios";
-import Image from "next/image";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import PostItem from "./posts/components/PostItem";
+import ImageViewer from "./components/ImageView";
+import ImageLayout from "./components/ImageLayout";
 export const metadata: Metadata = {
   title: "Barry Song's Blog",
   description: "Barry Song的个人博客, 分享我的生活和code",
@@ -17,17 +18,13 @@ export default async function Home() {
   const imgs: PhotoDTO[] = await axios
     .get(`${proxy}/photos?recent=true`)
     .then((res) => res.data);
-  const PostList: PostDTO[] = await axios
+  const postList: PostDTO[] = await axios
     .get(`${proxy}/posts?recent=true`)
     .then((res) => res.data);
 
-  const gallery = [
-    "col-[span_2_] row-[span_2_]",
-    "col-[span_2_] row-[span_1_]",
-    "col-[span_2_] row-[span_3_]",
-    "col-[span_2_] row-[span_2_]",
-    "col-[span_1_] row-[span_1_]",
-  ];
+  const settings: SettingDto = await axios
+    .get(`${proxy}/settings?recent=true`)
+    .then((res) => res.data);
   return (
     <Sheet>
       <main className="prose">
@@ -49,10 +46,11 @@ export default async function Home() {
         <section className="mt-6">
           <h2 className="font-bold text-lg mb-2">最近文章</h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
-            {PostList?.map((post, idx) => {
+            {postList?.map((post, idx) => {
               return (
                 <PostItem
                   key={post.id}
+                  came={"home"}
                   date={post.createdAt}
                   id={post.id}
                   title={post.title}
@@ -64,22 +62,10 @@ export default async function Home() {
         </section>
         <section className={`mt-6 `}>
           <h2 className="font-bold text-lg mb-2">最近照片</h2>
-          <div className={styles.gallery}>
-            {imgs?.reverse().map((img, idx) => {
-              const imgClassName = gallery[idx];
-              return (
-                <Image
-                  height={250}
-                  width={250}
-                  key={img.id}
-                  unoptimized
-                  className={`w-full h-full rounded-md  object-cover ${imgClassName}`}
-                  src={img.url ?? ""}
-                  alt={"imgs"}
-                />
-              );
-            })}
-          </div>
+          <ImageLayout
+            layout={JSON.parse(settings?.photoLayout ?? "[]") ?? []}
+            images={imgs}
+          ></ImageLayout>
         </section>
       </Suspense>
     </Sheet>
