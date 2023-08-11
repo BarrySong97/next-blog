@@ -90,11 +90,12 @@ export const PostDetail = async ({
         <div className="flex justify-center">
           <ImageViewer
             src={data?.cover ?? ""}
-            className="object-cover  mb-8 rounded-md w-full h-full cursor-pointer"
+            height={500}
+            className="object-cover  mb-8 rounded-md w-full h-[500px] cursor-pointer"
           />
         </div>
-        <div className="fixed top-[80px] left-[160px] md:max-w-[240px] flex flex-col justify-between bottom-[80px]   ">
-          <ul>
+        <div className="fixed top-[80px] left-[160px] md:max-w-[240px] md:flex flex-col justify-between bottom-[80px]   hidden">
+          <ul >
             {toc?.map((item) => {
               
               return (

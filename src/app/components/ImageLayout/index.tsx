@@ -28,19 +28,20 @@ const ImageLayout: FC<ImageLayoutProps> = ({ layout, images }) => {
   };
   return (
     <ResponsiveGridLayout
-      className="layout"
+      className="layout left-[-5px]"
       layouts={layouts}
       isResizable={false}
       isDraggable={false}
-      margin={{ md: [10, 10], xxs: [0, 10] }}
+      margin={{ md: [5, 5], xxs: [0, 10] }}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
       isDroppable={false}
+      // width={10}
       rowHeight={110}
     >
       {images?.map((item) => {
         return (
-          <div key={item.id}>
+          <div key={item.id} className="cursor-pointer">
             <ImageViewer
               key={item.id}
               src={item.url}
