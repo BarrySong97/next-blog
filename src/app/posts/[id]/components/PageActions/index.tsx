@@ -29,7 +29,7 @@ const PageActions: FC<PageActionsProps> = ({ backPath }) => {
   ];
 
   return (
-    <div className="md:flex gap-2 hidden ">
+    <div className="md:flex gap-2 hidden fixed right-60 bottom-10">
       {actionList.map((action) => {
         return (
           <div

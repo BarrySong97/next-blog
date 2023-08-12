@@ -7,6 +7,7 @@ import { ProjectDTO } from "@/blogapi";
 import axios from "axios";
 import Image from "next/image";
 import { Metadata } from "next";
+import { blurDataUrl } from "../components/ImageView";
 export const metadata: Metadata = {
   title: "项目 - Barry Song's Blog",
   description: "Barry Song的一些小作品",
@@ -31,6 +32,8 @@ export default async function Projects() {
                 <div className="w-[270px] overflow-hidden rounded-md drop-shadow-lg mr-4">
                   <Image
                     height={125}
+                    blurDataURL={blurDataUrl}
+                    placeholder="blur"
                     width={250}
                     className="h-full w-full object-cover"
                     src={project.image ?? ""}

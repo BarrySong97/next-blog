@@ -13,6 +13,7 @@ import htmlParser from "html-react-parser";
 import { CodeBlock } from "@/app/components/CodeBlock";
 import PageActions from "./components/PageActions";
 import ImageViewer from "@/app/components/ImageView";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 export const revalidate = 1000;
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -87,6 +88,7 @@ export const PostDetail = async ({
   return (
     <Sheet>
       <Suspense fallback={<Error />}>
+        <ScrollProgressBar />
         <div className="flex justify-center">
           <ImageViewer
             src={data?.cover ?? ""}
@@ -95,9 +97,8 @@ export const PostDetail = async ({
           />
         </div>
         <div className="fixed top-[80px] left-[160px] md:max-w-[240px] md:flex flex-col justify-between bottom-[80px]   hidden">
-          <ul >
+          <ul>
             {toc?.map((item) => {
-              
               return (
                 <li
                   key={item.anchor}
@@ -119,7 +120,6 @@ export const PostDetail = async ({
               );
             })}
           </ul>
-          <PageActions backPath={came} />
         </div>
         <div>
           <article className="wmde-markdown ">
@@ -129,6 +129,7 @@ export const PostDetail = async ({
             </div>
           </article>
         </div>
+        <PageActions backPath={came} />
       </Suspense>
     </Sheet>
   );

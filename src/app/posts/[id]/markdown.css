@@ -80,8 +80,13 @@
 }
 
 .wmde-markdown a {
-  @apply font-medium text-primary underline underline-offset-4 !important;
+  @apply font-medium  !important;
   cursor: pointer;
+  color: #000;
+  border-bottom: 1px solid rgba(22, 22, 22, 0.3);
+}
+.wmde-markdown a:hover{
+  border-bottom: 1px solid #000;
 }
 
 pre {

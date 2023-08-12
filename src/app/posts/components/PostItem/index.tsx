@@ -3,13 +3,14 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { blurDataUrl } from "@/app/components/ImageView";
 export type PostItemProps = {
   title: string;
   date: string;
   cover: string;
   className?: string;
   style?: React.CSSProperties;
-  came: 'home' | 'posts';
+  came: "home" | "posts";
   id: string;
 };
 export default function PostItem({
@@ -28,12 +29,18 @@ export default function PostItem({
   );
   const _date = dayjs(date).format("YYYY/MM/DD");
   return (
-    <Link className={_className} style={style} href={`/posts/${id}?came=${came}`}>
+    <Link
+      className={_className}
+      style={style}
+      href={`/posts/${id}?came=${came}`}
+    >
       <Image
         height={250}
         width={250}
         unoptimized
         src={cover ?? ""}
+        blurDataURL={blurDataUrl}
+        placeholder="blur"
         className="rounded-lg aspect-[240/135] w-full object-cover"
         alt={title}
       />
