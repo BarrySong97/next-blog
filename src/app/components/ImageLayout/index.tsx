@@ -39,9 +39,9 @@ const ImageLayout: FC<ImageLayoutProps> = ({ layout, images }) => {
       // width={10}
       rowHeight={110}
     >
-      {images?.map((item) => {
+      {images?.map((item, i) => {
         return (
-          <div key={item.id} className="cursor-pointer">
+          <div key={i} className="cursor-pointer">
             <ImageViewer
               key={item.id}
               src={item.url}
