@@ -16,14 +16,14 @@ export const metadata: Metadata = {
 export const revalidate = 1000;
 export default async function Home() {
   const imgs: PhotoDTO[] = await axios
-    .get(`${proxy}/photos?recent=true`)
+    .get(`${proxy}/photos/recent`)
     .then((res) => res.data);
   const postList: PostDTO[] = await axios
-    .get(`${proxy}/posts?recent=true`)
+    .get(`${proxy}/posts/recent`)
     .then((res) => res.data);
 
   const settings: SettingDto = await axios
-    .get(`${proxy}/settings?recent=true`)
+    .get(`${proxy}/settings`)
     .then((res) => res.data);
   return (
     <Sheet>

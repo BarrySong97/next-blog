@@ -104,7 +104,7 @@ export const PostDetail = async ({
                   key={item.anchor}
                   className="truncate"
                   style={{
-                    marginLeft: `${(item.level - 2) * 10}px`,
+                    marginLeft: `${(item.level - 1) * 10}px`,
                   }}
                 >
                   <a

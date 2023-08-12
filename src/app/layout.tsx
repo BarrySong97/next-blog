@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={`inter.className  `}>
         <main className="relative mx-2 min-h-screen md:max-w-4xl sm:max-w-none lg:max-w-6xl flex-col  md:mx-4 md:mt-0 md:flex-row  lg:mx-auto ">
         <Navigation />
+
           {children}
         </main>
       </body>
