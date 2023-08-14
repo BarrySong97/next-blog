@@ -9,7 +9,7 @@
 }
 
 .wmde-markdown h2 {
-  @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors !important;
+  @apply mt-4 md:mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors !important;
 }
 
 .wmde-markdown h3 {

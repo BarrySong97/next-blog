@@ -26,7 +26,7 @@ export default async function Home() {
     .get(`${proxy}/settings`)
     .then((res) => res.data);
   return (
-    <Sheet>
+    <Sheet className="lg:max-w-3xl xl:max-w-3xl 2xl:max-w-6xl ">
       <main className="prose">
         <p>
           欢迎来到我的

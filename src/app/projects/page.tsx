@@ -19,13 +19,13 @@ export default async function Projects() {
     .then((res) => res.data);
 
   return (
-    <Sheet>
+    <Sheet className="lg:max-w-3xl xl:max-w-3xl 2xl:max-w-6xl ">
       <div className="p-1">
         <h2 className="text-2xl font-bold mb-1">项目</h2>
         <p className="text-stone-400 mb-6 text-xs">
           一些微小的项目，用来帮助自己提升效率
         </p>
-        <div className="grid  gap-8 grid-cols-1 md:grid-cols-2 ">
+        <div className="grid  gap-8 grid-cols-1 lg:grid-cols-2 ">
           {data?.map((project) => {
             return (
               <div key={project.name} className="flex">

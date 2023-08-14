@@ -75,55 +75,64 @@ const Navigation: FC<SideBarProps> = () => {
   ];
   const pathname = usePathname();
   const [activeKey, setActiveKey] = useState<string>(pathname);
+  const shadow =
+    "md:supports-backdrop-blur:bg-background/60  md:bg-background/95 md:backdrop-blur";
+  const border = "border-b border-slate-900/10";
+  const layout =
+    "md:max-w-4xl lg:max-w-3xl xl:max-w-3xl 2xl:max-w-6xl  sm:max-w-none  lg:mx-auto  w-full py-3 md:py-4 z-50";
   return (
-    <nav className={` w-full py-4 z-50 bg-white items-center px-2 sm:px-6 sticky top-0 flex justify-between ${styles.nav}`}>
-      <ul className="relative flex gap-2">
-        {menuItems.map((item) => {
-          const isActive = activeKey === item.link;
-          return (
-            <li key={item.title}>
-              <Link
-                onClick={() => setActiveKey(item.link)}
-                className={`px-2 py-1 relative font-sans box-border  flex items-center text-lg cursor-pointer`}
-                href={item.link}
-              >
-                {item.link === pathname && (
-                  <motion.span
-                    layoutId="nav_underline"
-                    className="absolute left-0 top-full block h-px w-full bg-gray-500"
-                  ></motion.span>
-                )}
-                {/* {isActive ? <span className={styles.mark}></span> : null} */}
-                {/* <span style={{ zIndex: 100 }} className="mr-1 ">
+    <header className={`${border} sticky top-0 mb-2 md:mb-4 z-50`}>
+      <nav
+        className={` ${shadow} ${layout} bg-white items-center px-2 sm:px-6  flex justify-between ${styles.nav} `}
+      >
+        <ul className="relative flex gap-2">
+          {menuItems.map((item) => {
+            const isActive = activeKey === item.link;
+            return (
+              <li key={item.title}>
+                <Link
+                  onClick={() => setActiveKey(item.link)}
+                  className={`px-2 py-1 relative font-sans box-border  flex items-center text-lg cursor-pointer`}
+                  href={item.link}
+                >
+                  {item.link === pathname && (
+                    <motion.span
+                      layoutId="nav_underline"
+                      className="absolute left-0 top-full block h-px w-full bg-gray-500"
+                    ></motion.span>
+                  )}
+                  {/* {isActive ? <span className={styles.mark}></span> : null} */}
+                  {/* <span style={{ zIndex: 100 }} className="mr-1 ">
                   {item.icon}
                 </span> */}
-                <span
-                  style={{ zIndex: 100 }}
-                  className={`font-bold sm:text-sm text-xs hover:text-stone-900 ${
-                    isActive ? "text-stone-900" : "text-stone-400"
-                  }`}
-                >
-                  {item.title}
-                </span>
-              </Link>
+                  <span
+                    style={{ zIndex: 100 }}
+                    className={`font-bold sm:text-sm text-xs hover:text-stone-900 ${
+                      isActive ? "text-stone-900" : "text-stone-400"
+                    }`}
+                  >
+                    {item.title}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <ul className="flex gap-4 justify-between text-lg">
+          {contactItems.map((item) => (
+            <li key={item.title}>
+              <a
+                href={item.link}
+                target="_blank"
+                className="text-stone-600 cursor-pointer hover:text-stone-950"
+              >
+                {item.icon}
+              </a>
             </li>
-          );
-        })}
-      </ul>
-      <ul className="flex gap-4 justify-between text-lg">
-        {contactItems.map((item) => (
-          <li key={item.title}>
-            <a
-              href={item.link}
-              target="_blank"
-              className="text-stone-600 cursor-pointer hover:text-stone-950"
-            >
-              {item.icon}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+          ))}
+        </ul>
+      </nav>
+    </header>
   );
 };
 

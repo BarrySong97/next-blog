@@ -17,4 +17,5 @@ export type PostDTO = {
     cover: string;
     html: string;
     toc: string;
+    readingTime: string;
 };

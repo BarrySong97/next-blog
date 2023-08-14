@@ -14,6 +14,9 @@ import { CodeBlock } from "@/app/components/CodeBlock";
 import PageActions from "./components/PageActions";
 import ImageViewer from "@/app/components/ImageView";
 import ScrollProgressBar from "./components/ScrollProgressBar";
+import dayjs from "dayjs";
+import { Badge } from "@/app/components/ui/badge";
+import SideActions from "./components/SideActions";
 export const revalidate = 1000;
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -86,52 +89,78 @@ export const PostDetail = async ({
 
   // const article = { __html: $.html() ?? "" };
   return (
-    <Sheet>
+    <div className=" w-full rounded-md px-3 pb-4 sm:p-4 sm:px-6 sm:pt-0">
       <Suspense fallback={<Error />}>
-        <ScrollProgressBar />
-        <div className="flex justify-center">
-          <ImageViewer
-            src={data?.cover ?? ""}
-            height={500}
-            className="object-cover  mb-8 rounded-md w-full h-[500px] cursor-pointer"
-          />
-        </div>
-        <div className="fixed top-[80px] left-[160px] md:max-w-[240px] md:flex flex-col justify-between bottom-[80px]   hidden">
-          <ul>
-            {toc?.map((item) => {
-              return (
-                <li
-                  key={item.anchor}
-                  className="truncate"
-                  style={{
-                    marginLeft: `${(item.level - 1) * 10}px`,
-                  }}
-                >
-                  <a
-                    style={{
-                      borderBottom: "1px dashed rgba(125,125,125,.3)",
-                    }}
-                    className={`text-stone-700  text-sm cursor-pointer ${styles.tocItem}} `}
-                    href={`#${item.anchor.toLowerCase()}`}
-                  >
-                    {item.content}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div>
-          <article className="wmde-markdown ">
-            <h1 className="mb-4">{data?.title}</h1>
-            <div>
-              <>{htmlReactElement}</>
+        <Sheet className="lg:max-w-3xl xl:max-w-3xl 2xl:max-w-5xl flex">
+          <ScrollProgressBar />
+          <div className="md:block hidden fixed ml-[-4rem] ">
+            <SideActions post={data}/>
+          </div>
+          <div  >
+            <div className="md:flex justify-center">
+              <ImageViewer
+                src={data?.cover ?? ""}
+                height={500}
+                className="object-cover  mb-4 md:mb-4 rounded-md w-full md:h-[400px]  cursor-pointer"
+              />
             </div>
-          </article>
-        </div>
-        <PageActions backPath={came} />
+            <h1 className="mb-2 font-bold text-3xl">{data?.title}</h1>
+            <div className="flex flex-col md:flex-row md:items-center mb-2  gap-2">
+              <div className="text-stone-500  ">
+                <span>创建时间: </span>
+                {dayjs(data?.createdAt).format("YYYY-MM-DD HH:mm")}
+              </div>
+              <div className="text-stone-500 ">
+                <span>更新时间: </span>
+                {dayjs(data?.updatedAt).format("YYYY-MM-DD HH:mm")}
+              </div>
+            </div>
+            <div className="md:mb-4 mb-2 flex gap-2 items-center">
+              <Badge>{data?.category.name}</Badge>
+              <span>{data?.readingTime}分钟阅读</span>
+            </div>
+            <article className="wmde-markdown ">
+              <div>
+                <>{htmlReactElement}</>
+              </div>
+            </article>
+          </div>
+          <div className="md:ml-4 lg:ml-8 md:block hidden">
+            <div className="fixed  truncate h-full ">
+              <div
+                className="flex flex-col justify-between "
+                style={{ height: "calc(100vh - 100px)" }}
+              >
+                <ul>
+                  {toc?.map((item) => {
+                    return (
+                      <li
+                        key={item.anchor}
+                        className="truncate hover:text-stone-900"
+                        style={{
+                          marginLeft: `${(item.level - 1) * 10}px`,
+                        }}
+                      >
+                        <a
+                          style={{
+                            borderBottom: "1px dashed rgba(125,125,125,.3)",
+                          }}
+                          className={`text-stone-700   text-sm cursor-pointer ${styles.tocItem} toc-item`}
+                          href={`#${item.anchor.toLowerCase()}`}
+                        >
+                          {item.content}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <PageActions backPath={came} />
+              </div>
+            </div>
+          </div>
+        </Sheet>
       </Suspense>
-    </Sheet>
+    </div>
   );
 };
 

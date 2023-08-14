@@ -1,6 +1,6 @@
 "use client";
 import { SolarArrowToTopLeftBold, TablerArrowBackUp } from "@/app/posts/icons";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export interface PageActionsProps {
@@ -8,10 +8,72 @@ export interface PageActionsProps {
 }
 const PageActions: FC<PageActionsProps> = ({ backPath }) => {
   const router = useRouter();
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  function isInViewport(element: Element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= window.innerHeight &&
+      rect.right <= window.innerWidth
+    );
+  }
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    const isMobile =
+      /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i.test(
+        userAgent
+      );
+
+    const handleScroll = () => {
+      // 获取所有有id的元素
+      const headings = Array.from(document.querySelectorAll("h2[id], h3[id]"));
+      const tocItems = Array.from(document.querySelectorAll(".toc-item"));
+
+      // 遍历headings,获取滚动到视口中的元素
+      for (const heading of headings) {
+        // 获取当前Heading的id
+        if (isInViewport(heading)) {
+          const headingId = heading.id;
+
+          // 找到匹配的TocItem
+          const matchedItem = tocItems.find((item) => {
+            return item.attributes
+              .getNamedItem("href")
+              ?.value.includes(headingId);
+          });
+
+          // 如果找到匹配项,进行处理
+          if (matchedItem) {
+            // 例如在Heading前添加锚点元素
+            matchedItem.classList.add("toc-item-active");
+          }
+          tocItems.forEach((item) => {
+            if (item !== matchedItem) {
+              item.classList.remove("toc-item-active");
+            }
+          });
+
+          break;
+        }
+      }
+    };
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+      if (!isMobile) {
+        handleScroll();
+      }
+    });
+  }, []);
   const actionList = [
     {
       icon: <TablerArrowBackUp className="cursor-pointer text-2xl " />,
       key: "back",
+      show: true,
       onClick: () => {
         const path = backPath === "posts" ? "/posts" : "/";
         router.replace(path);
@@ -20,6 +82,7 @@ const PageActions: FC<PageActionsProps> = ({ backPath }) => {
     {
       icon: <SolarArrowToTopLeftBold className="cursor-pointer text-2xl " />,
       key: "backToTop",
+      show: showBackToTop,
       onClick: () => {
         window.scrollTo({
           top: 0,
@@ -29,13 +92,14 @@ const PageActions: FC<PageActionsProps> = ({ backPath }) => {
   ];
 
   return (
-    <div className="md:flex gap-2 hidden fixed right-60 bottom-10">
+    <div className="md:flex gap-2 hidden ">
       {actionList.map((action) => {
+        const show = action.show ? "" : "opacity-0 pointer-events-none ";
         return (
           <div
             key={action.key}
             onClick={action.onClick}
-            className="cursor-pointer p-1 hover:bg-gray-200  rounded  "
+            className={`cursor-pointer p-2 hover:bg-gray-200 transition-all rounded-full  ${show} `}
           >
             {action.icon}
           </div>
