@@ -15,8 +15,8 @@ const nextConfig = {
         hostname: "pic.imgdb.cn",
       },
       {
-        protocol: "https",
-        hostname: "images-1253529509.cos.ap-chengdu.myqcloud.com",
+        protocol: "http",
+        hostname: "192.168.0.112",
       },
       {
         protocol: "http",

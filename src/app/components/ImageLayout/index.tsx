@@ -24,17 +24,30 @@ const ImageLayout: FC<ImageLayoutProps> = ({ layout, images }) => {
         static: false,
       };
     }),
+    xs: layout.map((v, i) => {
+      const x = (i % 2) * 2;
+      const y = i * 3;
+      return {
+        ...v,
+        w: 1,
+        h: 2,
+        x: x,
+        y: y,
+        moved: false,
+        static: false,
+      };
+    }),
     lg: layout,
   };
   return (
     <ResponsiveGridLayout
-      className="layout left-[-5px]"
+      className="layout sm:ml-[-3px]"
       layouts={layouts}
       isResizable={false}
       isDraggable={false}
-      margin={{ md: [5, 5], xxs: [0, 10] }}
+      margin={{ md: [5, 5], xxs: [0, 5], xs: [5, 5] }}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-      cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+      cols={{ lg: 12, md: 9, sm: 3, xs: 2, xxs: 2 }}
       isDroppable={false}
       // width={10}
       rowHeight={110}

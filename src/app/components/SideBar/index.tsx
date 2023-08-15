@@ -90,7 +90,10 @@ const Navigation: FC<SideBarProps> = () => {
       >
         <ul className="relative flex gap-2">
           {menuItems.map((item) => {
-            const isActive = activeKey === item.link;
+            const isActive =
+              item.link === "/"
+                ? activeKey === item.link
+                : activeKey.includes(item.link);
             return (
               <li key={item.title}>
                 <Link
@@ -98,7 +101,7 @@ const Navigation: FC<SideBarProps> = () => {
                   className={`px-2 py-1 relative font-sans box-border  flex items-center text-lg cursor-pointer`}
                   href={item.link}
                 >
-                  {item.link === pathname && (
+                  {isActive && (
                     <motion.span
                       layoutId="nav_underline"
                       className="absolute left-0 top-full block h-px w-full bg-gray-500"

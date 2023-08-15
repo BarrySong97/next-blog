@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import styles from "./index.module.scss";
-import Error from "./errot";
+import PostLoading from "../../loading";
 import { Metadata, ResolvingMetadata } from "next";
 import "highlight.js/styles/atom-one-dark.css";
 import htmlParser from "html-react-parser";
@@ -36,6 +36,22 @@ export async function generateMetadata(
 
   return {
     title: `${post.title} - Barry Song's Blog`,
+    twitter: {
+      title: `${post.title} - Barry Song's Blog`,
+      creator: "@barrysong97",
+      images: post.cover,
+    },
+    openGraph: {
+      title: `${post.title} - Barry Song's Blog`,
+      images: [
+        {
+          url: post.cover,
+          width: 800,
+          height: 600,
+          alt: post.title,
+        },
+      ],
+    },
   };
 }
 export const PostDetail = async ({
@@ -90,13 +106,13 @@ export const PostDetail = async ({
   // const article = { __html: $.html() ?? "" };
   return (
     <div className=" w-full rounded-md px-3 pb-4 sm:p-4 sm:px-6 sm:pt-0">
-      <Suspense fallback={<Error />}>
+      <Suspense fallback={<PostLoading />}>
         <Sheet className="lg:max-w-3xl xl:max-w-3xl 2xl:max-w-5xl flex">
           <ScrollProgressBar />
           <div className="md:block hidden fixed ml-[-4rem] ">
-            <SideActions post={data}/>
+            <SideActions post={data} />
           </div>
-          <div  >
+          <div>
             <div className="md:flex justify-center">
               <ImageViewer
                 src={data?.cover ?? ""}
