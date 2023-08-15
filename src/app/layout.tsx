@@ -7,6 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Barry Song's Blog",
+  author : "Barry Song",
+  
   description: "Barry Song's Blog",
 };
 

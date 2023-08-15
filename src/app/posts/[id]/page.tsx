@@ -45,6 +45,10 @@ export async function generateMetadata(
     },
     openGraph: {
       title: `${post.title} - Barry Song's Blog`,
+      type: "article",
+      siteName: "Barry Song's Blog",
+      publishedTime: post.createdAt,
+      modifiedTime: post.updatedAt,
       images: [
         {
           url: post.cover,
