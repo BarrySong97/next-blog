@@ -37,9 +37,11 @@ export async function generateMetadata(
   return {
     title: `${post.title} - Barry Song's Blog`,
     twitter: {
+      card: "summary_large_image",
       title: `${post.title} - Barry Song's Blog`,
-      creator: "@barrysong97",
+      creator: "@BarrySong97",
       images: post.cover,
+      site: "@BarrySong97",
     },
     openGraph: {
       title: `${post.title} - Barry Song's Blog`,

@@ -12,6 +12,16 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Barry Song's Blog",
   description: "Barry Song的个人博客, 分享我的生活和code",
+  twitter: {
+    card: "summary_large_image",
+    site: "@BarrySong97",
+    creator: "@BarrySong97",
+    images: [
+      {
+        url: "https://pbs.twimg.com/profile_images/1635250588224204801/f0qNO2x-_400x400.jpg",
+      },
+    ],
+  },
 };
 
 export const revalidate = 1000;
@@ -47,7 +57,12 @@ export default async function Home() {
         <section className="mt-6">
           <div className="mb-2 flex justify-between items-end ">
             <h2 className="font-bold text-lg ">最近文章</h2>
-            <Link href='/posts' className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950">查看更多</Link>
+            <Link
+              href="/posts"
+              className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950"
+            >
+              查看更多
+            </Link>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-2 2xl:grid-cols-3 2xl:gap-6">
             {postList?.map((post, idx) => {
@@ -67,7 +82,12 @@ export default async function Home() {
         <section className={`mt-6 `}>
           <div className="mb-2 flex justify-between items-end">
             <h2 className="font-bold text-lg ">最近照片</h2>
-            <Link href='/photos' className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950">查看更多</Link>
+            <Link
+              href="/photos"
+              className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950"
+            >
+              查看更多
+            </Link>
           </div>
           <ImageLayout
             layout={JSON.parse(settings?.photoLayout ?? "[]") ?? []}
