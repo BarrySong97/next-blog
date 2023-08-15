@@ -23,7 +23,7 @@ export default async function Posts() {
         <p className="text-stone-400 mb-4 text-xs">
           分享我的看法，记录我的思想
         </p>
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  2xl:grid-cols-3 lg:gap-8">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  2xl:grid-cols-3 2xl:gap-6">
           {data.map((post) => {
             return (
               <PostItem

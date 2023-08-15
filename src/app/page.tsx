@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import PostItem from "./posts/components/PostItem";
 import ImageViewer from "./components/ImageView";
 import ImageLayout from "./components/ImageLayout";
+import Link from "next/link";
 export const metadata: Metadata = {
   title: "Barry Song's Blog",
   description: "Barry Song的个人博客, 分享我的生活和code",
@@ -44,8 +45,11 @@ export default async function Home() {
       </main>
       <Suspense fallback={<>error...</>}>
         <section className="mt-6">
-          <h2 className="font-bold text-lg mb-2">最近文章</h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-3 lg:gap-8">
+          <div className="mb-2 flex justify-between items-end ">
+            <h2 className="font-bold text-lg ">最近文章</h2>
+            <Link href='/posts' className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950">查看更多</Link>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-2 2xl:grid-cols-3 2xl:gap-6">
             {postList?.map((post, idx) => {
               return (
                 <PostItem
@@ -61,7 +65,10 @@ export default async function Home() {
           </div>
         </section>
         <section className={`mt-6 `}>
-          <h2 className="font-bold text-lg mb-2">最近照片</h2>
+          <div className="mb-2 flex justify-between items-end">
+            <h2 className="font-bold text-lg ">最近照片</h2>
+            <Link href='/photos' className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950">查看更多</Link>
+          </div>
           <ImageLayout
             layout={JSON.parse(settings?.photoLayout ?? "[]") ?? []}
             images={imgs}

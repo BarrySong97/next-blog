@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { usePathname } from "next/navigation";
 import "./styles.css";
@@ -80,6 +80,9 @@ const Navigation: FC<SideBarProps> = () => {
   const border = "border-b border-slate-900/10";
   const layout =
     "md:max-w-4xl lg:max-w-3xl xl:max-w-3xl 2xl:max-w-6xl  sm:max-w-none  lg:mx-auto  w-full py-3 md:py-4 z-50";
+  useEffect(() => {
+    setActiveKey(pathname);
+  }, [pathname]);
   return (
     <header className={`${border} sticky top-0 mb-2 md:mb-4 z-50`}>
       <nav
@@ -91,7 +94,7 @@ const Navigation: FC<SideBarProps> = () => {
             return (
               <li key={item.title}>
                 <Link
-                  onClick={() => setActiveKey(item.link)}
+                  // onClick={() => setActiveKey(item.link)}
                   className={`px-2 py-1 relative font-sans box-border  flex items-center text-lg cursor-pointer`}
                   href={item.link}
                 >
@@ -101,10 +104,6 @@ const Navigation: FC<SideBarProps> = () => {
                       className="absolute left-0 top-full block h-px w-full bg-gray-500"
                     ></motion.span>
                   )}
-                  {/* {isActive ? <span className={styles.mark}></span> : null} */}
-                  {/* <span style={{ zIndex: 100 }} className="mr-1 ">
-                  {item.icon}
-                </span> */}
                   <span
                     style={{ zIndex: 100 }}
                     className={`font-bold sm:text-sm text-xs hover:text-stone-900 ${
