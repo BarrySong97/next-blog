@@ -53,48 +53,46 @@ export default async function Home() {
           的一切。
         </p>
       </main>
-      <Suspense fallback={<>error...</>}>
-        <section className="mt-6">
-          <div className="mb-2 flex justify-between items-end ">
-            <h2 className="font-bold text-lg ">最近文章</h2>
-            <Link
-              href="/posts"
-              className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950"
-            >
-              查看更多
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-2 2xl:grid-cols-3 2xl:gap-6">
-            {postList?.map((post, idx) => {
-              return (
-                <PostItem
-                  key={post.id}
-                  came={"home"}
-                  date={post.createdAt}
-                  id={post.id}
-                  title={post.title}
-                  cover={post.cover}
-                ></PostItem>
-              );
-            })}
-          </div>
-        </section>
-        <section className={`mt-6 `}>
-          <div className="mb-2 flex justify-between items-end">
-            <h2 className="font-bold text-lg ">最近照片</h2>
-            <Link
-              href="/photos"
-              className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950"
-            >
-              查看更多
-            </Link>
-          </div>
-          <ImageLayout
-            layout={JSON.parse(settings?.photoLayout ?? "[]") ?? []}
-            images={imgs}
-          ></ImageLayout>
-        </section>
-      </Suspense>
+      <section className="mt-6">
+        <div className="mb-2 flex justify-between items-end ">
+          <h2 className="font-bold text-lg ">最近文章</h2>
+          <Link
+            href="/posts"
+            className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950"
+          >
+            查看更多
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-2 2xl:grid-cols-3 2xl:gap-6">
+          {postList?.map((post, idx) => {
+            return (
+              <PostItem
+                key={post.id}
+                came={"home"}
+                date={post.createdAt}
+                id={post.id}
+                title={post.title}
+                cover={post.cover}
+              ></PostItem>
+            );
+          })}
+        </div>
+      </section>
+      <section className={`mt-6 `}>
+        <div className="mb-2 flex justify-between items-end">
+          <h2 className="font-bold text-lg ">最近照片</h2>
+          <Link
+            href="/photos"
+            className="text-stone-600 text-sm border-b-slate-400 border-b-[1px] cursor-pointer hover:text-stone-950"
+          >
+            查看更多
+          </Link>
+        </div>
+        <ImageLayout
+          layout={JSON.parse(settings?.photoLayout ?? "[]") ?? []}
+          images={imgs}
+        ></ImageLayout>
+      </section>
     </Sheet>
   );
 }
