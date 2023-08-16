@@ -1,12 +1,9 @@
 import Sheet from "@/app/components/Sheet";
 import { PostDTO } from "@/blogapi";
-import { Suspense } from "react";
 import "./markdown.css";
 import axios from "axios";
-import Image from "next/image";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import styles from "./index.module.scss";
-import PostLoading from "../../loading";
 import { Metadata, ResolvingMetadata } from "next";
 import "highlight.js/styles/atom-one-dark.css";
 import htmlParser from "html-react-parser";

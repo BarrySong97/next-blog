@@ -31,4 +31,5 @@ export const OpenAPI: OpenAPIConfig = {
   ENCODE_PATH: undefined,
 };
 
-export const proxy = process.env.BACKEND_URL;
+export const proxy =
+  process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL;

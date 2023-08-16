@@ -2,6 +2,7 @@
 import { SolarArrowToTopLeftBold, TablerArrowBackUp } from "@/app/posts/icons";
 import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/app/components/ui/button";
 
 export interface PageActionsProps {
   backPath: string;
@@ -92,17 +93,18 @@ const PageActions: FC<PageActionsProps> = ({ backPath }) => {
   ];
 
   return (
-    <div className="md:flex gap-2 hidden ">
+    <div className="md:flex gap-2 hidden ml-4">
       {actionList.map((action) => {
         const show = action.show ? "" : "opacity-0 pointer-events-none ";
         return (
-          <div
+          <Button
+            variant={"outline"}
             key={action.key}
             onClick={action.onClick}
-            className={`cursor-pointer p-2 hover:bg-gray-200 transition-all rounded-full  ${show} `}
+            className={`p-2  transition-all rounded-lg  ${show} `}
           >
             {action.icon}
-          </div>
+          </Button>
         );
       })}
     </div>

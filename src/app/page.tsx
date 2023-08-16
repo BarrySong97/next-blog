@@ -1,12 +1,9 @@
 import Sheet from "./components/Sheet";
-import styles from "./page.module.scss";
 import { proxy } from "@/blogapi/core/OpenAPI";
 import { PhotoDTO, PostDTO, SettingDto } from "@/blogapi";
 import axios from "axios";
 import { Metadata } from "next";
-import { Suspense } from "react";
 import PostItem from "./posts/components/PostItem";
-import ImageViewer from "./components/ImageView";
 import ImageLayout from "./components/ImageLayout";
 import Link from "next/link";
 export const metadata: Metadata = {
@@ -64,7 +61,7 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-2 2xl:grid-cols-3 2xl:gap-6">
-          {postList?.map((post, idx) => {
+          {postList?.length && postList?.map((post, idx) => {
             return (
               <PostItem
                 key={post.id}

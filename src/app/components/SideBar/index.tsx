@@ -17,6 +17,7 @@ import {
   UimBox,
 } from "./icons";
 import SoicalCard from "../HoverCard";
+import CommandSearch from "../CommandSearch";
 export interface SideBarProps {}
 type SideMenuItem = {
   title: string;
@@ -120,19 +121,22 @@ const Navigation: FC<SideBarProps> = () => {
             );
           })}
         </ul>
-        <ul className="flex gap-4 justify-between text-lg">
-          {contactItems.map((item) => (
-            <li key={item.title}>
-              <a
-                href={item.link}
-                target="_blank"
-                className="text-stone-600 cursor-pointer hover:text-stone-950"
-              >
-                {item.icon}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="flex gap-4 items-center"> 
+          <CommandSearch />
+          <ul className="flex gap-4 justify-between text-lg">
+            {contactItems.map((item) => (
+              <li key={item.title}>
+                <a
+                  href={item.link}
+                  target="_blank"
+                  className="text-stone-600 cursor-pointer hover:text-stone-950"
+                >
+                  {item.icon}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
     </header>
   );
