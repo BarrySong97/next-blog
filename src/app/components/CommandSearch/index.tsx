@@ -84,7 +84,6 @@ export default function CommandSearch() {
       wait: 500,
     }
   );
-  console.log(postList?.length);
   const renderList = () => {
     if (!postList?.length) {
       return <div className="text-center py-4 text-stone-500 text-sm">没有找到匹配内容</div>;

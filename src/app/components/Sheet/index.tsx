@@ -9,7 +9,7 @@ export interface SheetProps {
 }
 const Sheet: FC<SheetProps> = ({ className = "", children }) => {
   const layoutClass =
-    "md:max-w-2xl sm:max-w-none relative   flex-col  md:mt-0 md:flex-row  md:mx-auto ";
+    "md:max-w-2xl sm:max-w-none    flex-col  md:mt-0 md:flex-row  md:mx-auto ";
   return (
     <>
       <motion.div

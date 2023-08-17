@@ -85,7 +85,7 @@ const Navigation: FC<SideBarProps> = () => {
     setActiveKey(pathname);
   }, [pathname]);
   return (
-    <header className={`${border} sticky top-0 mb-2 md:mb-4 z-50`}>
+    <header className={`${border} sticky top-0 mb-2 md:mb-4 z-20`}>
       <nav
         className={` ${shadow} ${layout} bg-white items-center px-2 sm:px-6  flex justify-between ${styles.nav} `}
       >
