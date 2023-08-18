@@ -25,7 +25,7 @@ const ImageGrid: FC<ImageGridProps> = ({ data }) => {
                 className="md:h-[200px] lg:h-[250px] flex justify-start"
               >
                 <motion.img
-                  layoutId={img.id}
+                  // layoutId={img.id}
                   src={img.url}
                   className={`object-cover rounded-md w-full h-full cursor-pointer  `}
                 ></motion.img>
@@ -47,8 +47,7 @@ const ImageGrid: FC<ImageGridProps> = ({ data }) => {
               exit={{
                 opacity: 0,
                 transition: {
-                  duration: 0.4,
-                  delay: 0.2,
+                  duration: 0.6,
                 },
               }}
               onClick={() => {
@@ -57,7 +56,7 @@ const ImageGrid: FC<ImageGridProps> = ({ data }) => {
               style={{
                 backgroundColor: "hsla(0,0%,100%,0.98)",
               }}
-              className="absolute w-screen top-0 left-0 h-screen  z-30 flex justify-center items-center overflow-hidden"
+              className="fixed w-screen top-0 left-0 h-screen  z-30 flex justify-center items-center overflow-hidden"
             >
               <motion.div
                 style={{
@@ -91,7 +90,7 @@ const ImageGrid: FC<ImageGridProps> = ({ data }) => {
                     className={`object-cover rounded-l-md  w-[671px] max-h-[871px]   `}
                   ></motion.img>
                 </motion.div>
-                <motion.div
+                {/* <motion.div
                   transition={{ duration: 0.6 }}
                   exit={{
                     transition: { delay: 0.6, duration: 0.6 },
@@ -99,7 +98,7 @@ const ImageGrid: FC<ImageGridProps> = ({ data }) => {
                   className="bg-white rounded-r-lg z-30 w-[440px] h-[871px]"
                 >
                   111
-                </motion.div>
+                </motion.div> */}
               </motion.div>
             </motion.div>
           </>

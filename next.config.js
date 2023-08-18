@@ -26,6 +26,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.hashnode.com",
       },
+      {
+        protocol: "https",
+        hostname: "images-1253529509.cos.ap-chengdu.myqcloud.com",
+      }
     ],
   },
 };

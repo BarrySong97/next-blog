@@ -61,18 +61,19 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2  lg:grid-cols-2 2xl:grid-cols-3 2xl:gap-6">
-          {postList?.length && postList?.map((post, idx) => {
-            return (
-              <PostItem
-                key={post.id}
-                came={"home"}
-                date={post.createdAt}
-                id={post.id}
-                title={post.title}
-                cover={post.cover}
-              ></PostItem>
-            );
-          })}
+          {postList?.length &&
+            postList?.map((post, idx) => {
+              return (
+                <PostItem
+                  key={post.id}
+                  came={"home"}
+                  date={post.createdAt}
+                  id={post.id}
+                  title={post.title}
+                  cover={post.cover}
+                ></PostItem>
+              );
+            })}
         </div>
       </section>
       <section className={`mt-6 `}>
