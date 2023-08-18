@@ -1,6 +1,6 @@
 "use client";
 import { PhotoDTO } from "@/blogapi";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, delay, motion } from "framer-motion";
 import React, { FC, useState } from "react";
 export interface ImageGridProps {
   data: PhotoDTO[];
@@ -38,53 +38,68 @@ const ImageGrid: FC<ImageGridProps> = ({ data }) => {
           </motion.div>
         );
       })}
-      <AnimatePresence
-      >
+      <AnimatePresence>
         {select ? (
           <>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={{
+                opacity: 0,
+                transition: {
+                  duration: 0.4,
+                  delay: 0.2,
+                },
+              }}
               onClick={() => {
                 setSelect(null);
               }}
               style={{
                 backgroundColor: "hsla(0,0%,100%,0.98)",
               }}
-              className="absolute w-screen top-0 left-0 h-screen  z-30 flex justify-center items-center"
+              className="absolute w-screen top-0 left-0 h-screen  z-30 flex justify-center items-center overflow-hidden"
             >
               <motion.div
                 style={{
                   border: "1px solid rgba(0,0,0,0.08)",
                 }}
-                className="flex rounded-lg shadow-lg"
+                className="flex rounded-lg shadow-lg overflow-hidden"
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
                 transition={{ duration: 0.6 }}
+                exit={{
+                  transition: { delay: 0.6, duration: 0.6 },
+                }}
                 layoutId={`container-${select.id}`}
               >
                 <motion.div
                   layoutId={`img-container-${select.id}`}
                   transition={{ duration: 0.6 }}
+                  exit={{
+                    transition: { delay: 0.6, duration: 0.6 },
+                  }}
                   className="flex items-center bg-gray-100"
                 >
                   <motion.img
                     src={select.url}
                     layoutId={select.id}
                     transition={{ duration: 0.6 }}
+                    exit={{
+                      transition: { delay: 0.6, duration: 0.6 },
+                    }}
                     className={`object-cover rounded-l-md  w-[671px] max-h-[871px]   `}
                   ></motion.img>
                 </motion.div>
-                {/* <motion.div
+                <motion.div
                   transition={{ duration: 0.6 }}
-                  // exit={{ width: 0, transition: { duration: 0.6 } }}
-                  // layoutId={`content-${select.id}`}
+                  exit={{
+                    transition: { delay: 0.6, duration: 0.6 },
+                  }}
                   className="bg-white rounded-r-lg z-30 w-[440px] h-[871px]"
                 >
                   111
-                </motion.div> */}
+                </motion.div>
               </motion.div>
             </motion.div>
           </>

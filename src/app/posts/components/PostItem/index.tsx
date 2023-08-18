@@ -25,7 +25,7 @@ export default function PostItem({
   const _className = classNames(
     className,
     styles.articleItem,
-    "cursor-pointer",
+    "cursor-pointer rounded-lg bg-transparent",
     "focus-within:bg-glass lg:hover:bg-glass snap-center   transition-[background,transform] duration-300 focus-within:z-10 focus-within:scale-105 focus-within:shadow-lg lg:hover:z-10 lg:hover:scale-105 lg:hover:shadow-lg "
   );
   const _date = dayjs(date).format("YYYY/MM/DD");
@@ -35,7 +35,7 @@ export default function PostItem({
       style={style}
       href={`/posts/${id}?came=${came}`}
     >
-      <div className="shadow-lg">
+      <div className="shadow-lg rounded-lg">
         <Image
           height={250}
           width={250}

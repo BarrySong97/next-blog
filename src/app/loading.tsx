@@ -4,7 +4,7 @@ const PostLoading: FC<ErrorProps> = () => {
   return (
     <div
       style={{
-        minHeight: "calc(100vh - 10.7rem)",
+        minHeight: "calc(100vh - 170px)",
       }}
       className="w-full rounded-md px-3 pb-4 sm:p-4 sm:px-6 sm:pt-0 md:max-w-2xl sm:max-w-none relative  flex-col  md:mt-0 md:flex-row  md:mx-auto lg:max-w-3xl xl:max-w-3xl 2xl:max-w-6xl "
     >

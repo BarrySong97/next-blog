@@ -13,12 +13,12 @@ const Sheet: FC<SheetProps> = ({ className = "", children }) => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 100 }}
+        initial={{ opacity: 0, y: 100, }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}
         transition={{ duration: 0.6 }}
         style={{
-          minHeight: "calc(100vh - 10.7rem)",
+          minHeight: "calc(100vh - 170px)",
         }}
         className={` w-full rounded-md px-3 pb-4 sm:p-4 sm:px-6 sm:pt-0 ${layoutClass} ${className} `}
       >
