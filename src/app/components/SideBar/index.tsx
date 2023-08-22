@@ -1,29 +1,59 @@
 "use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import "./styles.css";
 import {
   IconParkFlashPayment,
-  MaterialSymbolsAccountBox,
-  MdiGithub,
+  MaterialSymbolsLogin,
   NotoCameraWithFlash,
   NotoV1Postbox,
-  RiWeiboFill,
-  TablerBrandBilibili,
-  TablerBrandTwitterFilled,
   UimBox,
 } from "./icons";
-import SoicalCard from "../HoverCard";
 import CommandSearch from "../CommandSearch";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { userAtom } from "@/app/providers";
+import { atom, useAtom } from "jotai";
+import { proxy } from "@/blogapi/core/OpenAPI";
+import { UserDTO } from "@/blogapi";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 export interface SideBarProps {}
 type SideMenuItem = {
   title: string;
   icon: ReactNode;
   link: string;
 };
+export function createGoogleLoginUrl() {
+  const baseUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+  const scope = "email profile"; // 请求 email 和 profile 信息
+  const responseType = "code"; // 我们希望得到一个授权码
+  const url = new URL(baseUrl);
+
+  url.searchParams.append(
+    "client_id",
+    process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ""
+  );
+  url.searchParams.append(
+    "redirect_uri",
+    process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL ?? ""
+  );
+  url.searchParams.append("scope", scope);
+  url.searchParams.append("response_type", responseType);
+  console.log(url.toString());
+
+  window.location.href = url.toString();
+}
 const Navigation: FC<SideBarProps> = () => {
   const menuItems: SideMenuItem[] = [
     {
@@ -52,30 +82,11 @@ const Navigation: FC<SideBarProps> = () => {
     //   link: "/resume",
     // },
   ];
-  const contactItems: SideMenuItem[] = [
-    {
-      title: "github",
-      icon: <MdiGithub />,
-      link: "https://github.com/BarrySong97",
-    },
-    {
-      title: "weibo",
-      icon: <RiWeiboFill />,
-      link: "https://weibo.com/u/2670904663",
-    },
-    {
-      title: "bilibili",
-      icon: <TablerBrandBilibili />,
-      link: "https://space.bilibili.com/868586?spm_id_from=333.1007.0.0",
-    },
-    {
-      title: "twitter",
-      icon: <TablerBrandTwitterFilled />,
-      link: "https://twitter.com/home",
-    },
-  ];
   const pathname = usePathname();
   const [activeKey, setActiveKey] = useState<string>(pathname);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [user, setUser] = useAtom(userAtom);
   const shadow =
     "md:supports-backdrop-blur:bg-background/60  md:bg-background/95 md:backdrop-blur";
   const border = "border-b border-slate-900/10";
@@ -84,6 +95,62 @@ const Navigation: FC<SideBarProps> = () => {
   useEffect(() => {
     setActiveKey(pathname);
   }, [pathname]);
+
+  const googleLogin = async () => {
+    const urlParams = new URLSearchParams(location.search);
+    const code = urlParams.get("code");
+    const path = window.localStorage.getItem("redirectUrl");
+
+    router.replace(path ?? "/");
+    if (!code) return;
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${proxy}/auth/google?code=${code}&client=front`,
+        {
+          method: "POST",
+        }
+      ).then((res) => res.json());
+      const { accessToken } = response;
+      if (!accessToken) return;
+      window.localStorage.setItem("accessToken", accessToken);
+      setUser(response.user);
+      setLoading(false);
+    } catch (error) {
+      window.localStorage.removeItem("accessToken");
+    }
+  };
+  const getCurrentUser = async (token: string) => {
+    setLoading(true);
+    const user = await fetch(`${proxy}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
+    setLoading(false);
+    if (user) {
+      setUser(user);
+    }
+  };
+  const logout = () => {
+    window.localStorage.removeItem("accessToken");
+    setUser(null);
+    setLoading(false);
+  };
+  useEffect(() => {
+    if (user) return;
+    const token = window.localStorage.getItem("accessToken");
+    if (token) {
+      getCurrentUser(token);
+    } else {
+      googleLogin();
+    }
+  }, []);
+
   return (
     <header className={`${border} sticky top-0 mb-2 md:mb-4 z-20`}>
       <nav
@@ -121,21 +188,41 @@ const Navigation: FC<SideBarProps> = () => {
             );
           })}
         </ul>
-        <div className="flex gap-4 items-center"> 
+        <div className="flex gap-4 items-center">
           <CommandSearch />
-          <ul className="flex gap-4 justify-between text-lg">
-            {contactItems.map((item) => (
-              <li key={item.title}>
-                <a
-                  href={item.link}
-                  target="_blank"
-                  className="text-stone-600 cursor-pointer hover:text-stone-950"
+          {user || loading ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar className="h-[30px] w-[30px]">
+                  <AvatarImage src={user?.avatar} />
+                  <AvatarFallback>{user?.firstname?.[0]}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>我的账户</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    logout();
+                  }}
                 >
-                  {item.icon}
-                </a>
-              </li>
-            ))}
-          </ul>
+                  登出
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              onClick={() => {
+                window.localStorage.setItem("redirectUrl", pathname);
+                createGoogleLoginUrl();
+              }}
+              className="rounded-full"
+              variant={"outline"}
+              size={"icon"}
+            >
+              <MaterialSymbolsLogin />
+            </Button>
+          )}
         </div>
       </nav>
     </header>

@@ -24,7 +24,7 @@ const ScrollProgressBar: React.FC<ScrollProgressBarProps> = () => {
     return () => window.removeEventListener("scroll", updateScrollProgress);
   }, []);
   return (
-    <div className="progress-bar will-change-auto bg-[#6941c6] h-[4px]  top-[48px] md:top-[64px] z-50 fixed w-full left-0 " style={{ width: `${scrollProgress}%` }} />
+    <div className="progress-bar will-change-auto bg-[#6941c6] h-[4px]  top-[60px] md:top-[70px] z-50 fixed w-full left-0 " style={{ width: `${scrollProgress}%` }} />
   );
 };
 

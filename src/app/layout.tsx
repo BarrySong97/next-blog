@@ -1,10 +1,9 @@
 import { Metadata } from "next";
-import Sheet from "./components/Sheet";
 import Navigation from "./components/SideBar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
-
+import Providers from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -44,10 +43,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`inter.className  `}>
-        <Navigation />
-        <main className="overflow-hidden">{children}</main>
-        <Footer />
+      <body className={`${inter.className}`}>
+        <Providers>
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

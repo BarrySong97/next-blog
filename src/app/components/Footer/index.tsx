@@ -1,6 +1,34 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
+import { MdiGithub, RiWeiboFill, TablerBrandBilibili, TablerBrandTwitterFilled } from "../SideBar/icons";
 export interface FooterProps {}
+type SideMenuItem = {
+  title: string;
+  icon: ReactNode;
+  link: string;
+};
 const Footer: FC<FooterProps> = () => {
+  const contactItems: SideMenuItem[] = [
+    {
+      title: "github",
+      icon: <MdiGithub />,
+      link: "https://github.com/BarrySong97",
+    },
+    {
+      title: "weibo",
+      icon: <RiWeiboFill />,
+      link: "https://weibo.com/u/2670904663",
+    },
+    {
+      title: "bilibili",
+      icon: <TablerBrandBilibili />,
+      link: "https://space.bilibili.com/868586?spm_id_from=333.1007.0.0",
+    },
+    {
+      title: "twitter",
+      icon: <TablerBrandTwitterFilled />,
+      link: "https://twitter.com/home",
+    },
+  ];
   return (
     <footer className="bg-white mt-4   rounded-lg shadow dark:bg-gray-900 ">
       <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700 " />
@@ -22,6 +50,21 @@ const Footer: FC<FooterProps> = () => {
               BarrySong4Real All rights reserved.
             </a>
           </span>
+        </div>
+        <div className="mt-2">
+          <ul className="flex gap-4 text-lg">
+            {contactItems.map((item) => (
+              <li key={item.title}>
+                <a
+                  href={item.link}
+                  target="_blank"
+                  className="text-stone-600 cursor-pointer hover:text-stone-950"
+                >
+                  {item.icon}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

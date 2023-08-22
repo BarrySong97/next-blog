@@ -14,11 +14,14 @@ import ScrollProgressBar from "./components/ScrollProgressBar";
 import dayjs from "dayjs";
 import { Badge } from "@/app/components/ui/badge";
 import SideActions from "./components/SideActions";
+import Comments from "./components/Comments";
+import { Separator } from "@/app/components/ui/separator";
 export const revalidate = 1000;
-export async function generateMetadata(
-  { params }: { params: { id: string } },
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   // read route params
   const id = params.id;
 
@@ -134,7 +137,7 @@ export const PostDetail = async ({
             </div>
           </div>
           <div className="md:mb-4 mb-2 flex gap-2 items-center">
-            <Badge>{data?.category.name}</Badge>
+            <Badge>{data?.category?.name}</Badge>
             <span>{data?.readingTime}分钟阅读</span>
           </div>
           <article className="wmde-markdown ">
@@ -142,6 +145,10 @@ export const PostDetail = async ({
               <>{htmlReactElement}</>
             </div>
           </article>
+          <Separator id="comments" className="my-4" />
+          <section>
+            <Comments />
+          </section>
         </div>
         <div className="md:ml-4 lg:ml-8 md:block hidden">
           <div className="fixed  truncate h-full ">

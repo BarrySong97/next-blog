@@ -12,6 +12,7 @@ import {
 import {
   BiSinaWeibo,
   IconParkTencentQq,
+  IconamoonCommentFill,
   MaterialSymbolsContentCopy,
   SolarShareBold,
   TablerBrandTwitterFilled,
@@ -25,6 +26,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/app/components/ui/hover-card";
+import Link from "next/link";
 export interface SideActionsProps {
   post?: PostDTO;
 }
@@ -35,11 +37,11 @@ const SideActions: FC<SideActionsProps> = ({ post }) => {
     //   icon: "",
     //   onClick: () => {},
     // },
-    // {
-    //   key: "comment",
-    //   icon: "",
-    //   onClick: () => {},
-    // },
+    {
+      key: "comment",
+      icon: <IconamoonCommentFill />,
+      onClick: () => {},
+    },
     {
       key: "share",
       icon: <SolarShareBold />,
@@ -64,11 +66,11 @@ const SideActions: FC<SideActionsProps> = ({ post }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {items.map((item) => {
         const className = `text-xl text-stone-600  rounded-full ${item.className}`;
         return (
-          <div key={item.key}>
+          <div key={item.key} >
             {item.key !== "share" ? (
               <Button
                 style={item.style}
@@ -78,7 +80,11 @@ const SideActions: FC<SideActionsProps> = ({ post }) => {
                 onClick={item.onClick}
                 variant="outline"
               >
-                {item.icon}
+                {item.key === "comment" ? (
+                  <a href="#comments">{item.icon}</a>
+                ) : (
+                  item.icon
+                )}
               </Button>
             ) : (
               <Popover>
