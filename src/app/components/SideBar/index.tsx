@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import "./styles.css";
 import {
   IconParkFlashPayment,
@@ -17,9 +17,8 @@ import CommandSearch from "../CommandSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { userAtom } from "@/app/providers";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { proxy } from "@/blogapi/core/OpenAPI";
-import { UserDTO } from "@/blogapi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -85,7 +84,8 @@ const Navigation: FC<SideBarProps> = () => {
   const pathname = usePathname();
   const [activeKey, setActiveKey] = useState<string>(pathname);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
   const [user, setUser] = useAtom(userAtom);
   const shadow =
     "md:supports-backdrop-blur:bg-background/60  md:bg-background/95 md:backdrop-blur";
@@ -96,30 +96,6 @@ const Navigation: FC<SideBarProps> = () => {
     setActiveKey(pathname);
   }, [pathname]);
 
-  const googleLogin = async () => {
-    const urlParams = new URLSearchParams(location.search);
-    const code = urlParams.get("code");
-    const path = window.localStorage.getItem("redirectUrl");
-
-    router.replace(path ?? "/");
-    if (!code) return;
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `${proxy}/auth/google?code=${code}&client=front`,
-        {
-          method: "POST",
-        }
-      ).then((res) => res.json());
-      const { accessToken } = response;
-      if (!accessToken) return;
-      window.localStorage.setItem("accessToken", accessToken);
-      setUser(response.user);
-      setLoading(false);
-    } catch (error) {
-      window.localStorage.removeItem("accessToken");
-    }
-  };
   const getCurrentUser = async (token: string) => {
     setLoading(true);
     const user = await fetch(`${proxy}/auth/me`, {
@@ -147,7 +123,7 @@ const Navigation: FC<SideBarProps> = () => {
     if (token) {
       getCurrentUser(token);
     } else {
-      googleLogin();
+      // googleLogin();
     }
   }, []);
 
@@ -158,10 +134,11 @@ const Navigation: FC<SideBarProps> = () => {
       >
         <ul className="relative flex gap-2">
           {menuItems.map((item) => {
-            const isActive =
-              item.link === "/"
+            const isActive = !code
+              ? item.link === "/"
                 ? activeKey === item.link
-                : activeKey.includes(item.link);
+                : activeKey.includes(item.link)
+              : false;
             return (
               <li key={item.title}>
                 <Link

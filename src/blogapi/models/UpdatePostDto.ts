@@ -7,6 +7,7 @@ export type UpdatePostDto = {
     title?: string;
     content?: string;
     authorId?: string;
+    updatedAt?: string;
     categoryId?: string;
     cover?: string;
     html?: string;

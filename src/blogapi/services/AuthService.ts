@@ -13,17 +13,20 @@ export class AuthService {
 
     /**
      * @param code 
+     * @param client 
      * @returns Auth 
      * @throws ApiError
      */
     public static authControllerGoogleLogin(
 code: string,
+client: string,
 ): CancelablePromise<Auth> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/google',
             query: {
                 'code': code,
+                'client': client,
             },
         });
     }

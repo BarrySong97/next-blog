@@ -13,6 +13,6 @@ export async function GET(request: Request) {
     ).then((res) => res.json());
     return NextResponse.json(response);
   } catch (error) {
-    return NextResponse.error();
+    return NextResponse.json([]);
   }
 }

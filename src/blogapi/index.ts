@@ -5,6 +5,7 @@
 
 export type { Auth } from './models/Auth';
 export type { CategoryDTO } from './models/CategoryDTO';
+export type { CommentDTO } from './models/CommentDTO';
 export type { CreateCategoryDto } from './models/CreateCategoryDto';
 export type { CreateCommentDto } from './models/CreateCommentDto';
 export type { CreatePhotoDto } from './models/CreatePhotoDto';

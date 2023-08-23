@@ -3,9 +3,17 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateCommentDto = {
+import type { UserDTO } from './UserDTO';
+
+export type CommentDTO = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
     content: string;
     postId: string;
     parentId?: string;
     replyToId?: string;
+    children?: Array<CommentDTO>;
+    replies?: Array<CommentDTO>;
+    author: UserDTO;
 };

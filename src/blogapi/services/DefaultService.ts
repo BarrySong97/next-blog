@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CommentDTO } from '../models/CommentDTO';
 import type { CreateCommentDto } from '../models/CreateCommentDto';
 import type { UpdateCommentDto } from '../models/UpdateCommentDto';
 
@@ -13,12 +14,12 @@ export class DefaultService {
 
     /**
      * @param requestBody 
-     * @returns string 
+     * @returns CommentDTO 
      * @throws ApiError
      */
     public static commentsControllerCreate(
 requestBody: CreateCommentDto,
-): CancelablePromise<string> {
+): CancelablePromise<CommentDTO> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/comments',
@@ -28,10 +29,10 @@ requestBody: CreateCommentDto,
     }
 
     /**
-     * @returns string 
+     * @returns any 
      * @throws ApiError
      */
-    public static commentsControllerFindAll(): CancelablePromise<string> {
+    public static commentsControllerFindAll(): CancelablePromise<Array<Record<string, any>>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/comments',
@@ -78,12 +79,12 @@ requestBody: UpdateCommentDto,
 
     /**
      * @param id 
-     * @returns string 
+     * @returns any 
      * @throws ApiError
      */
     public static commentsControllerRemove(
 id: string,
-): CancelablePromise<string> {
+): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/comments/{id}',

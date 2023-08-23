@@ -18,7 +18,7 @@ const Sheet: FC<SheetProps> = ({ className = "", children }) => {
         exit={{ opacity: 0, y: 100 }}
         transition={{ duration: 0.6 }}
         style={{
-          minHeight: "calc(100vh - 170px)",
+          minHeight: "calc(100vh - 198px)",
         }}
         className={` w-full rounded-md px-3 pb-4 sm:p-4 sm:px-6 sm:pt-0 ${layoutClass} ${className} `}
       >

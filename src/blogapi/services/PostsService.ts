@@ -30,13 +30,19 @@ requestBody: CreatePostDto,
     }
 
     /**
+     * @param search 
      * @returns PostDTO 
      * @throws ApiError
      */
-    public static postControllerFindAll(): CancelablePromise<Array<PostDTO>> {
+    public static postControllerFindAll(
+search: string,
+): CancelablePromise<Array<PostDTO>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/posts',
+            query: {
+                'search': search,
+            },
         });
     }
 

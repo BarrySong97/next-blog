@@ -68,7 +68,7 @@ export const PostDetail = async ({
   params: { id: string };
 }) => {
   const { id } = params;
-  const { came } = searchParams;
+  const { came = 'posts'} = searchParams;
   const data: PostDTO | undefined = await axios
     .get(`${proxy}/posts/${id}`)
     .then((res) => res.data)

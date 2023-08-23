@@ -4,4 +4,8 @@
 /* eslint-disable */
 
 export type UpdateCommentDto = {
+    content?: string;
+    postId?: string;
+    parentId?: string;
+    replyToId?: string;
 };

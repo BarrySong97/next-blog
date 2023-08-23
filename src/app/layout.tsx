@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Footer from "./components/Footer";
 import Providers from "./providers";
+import { Toaster } from "./components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -49,6 +50,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </Providers>
+        {/* <Toaster /> */}
       </body>
     </html>
   );
