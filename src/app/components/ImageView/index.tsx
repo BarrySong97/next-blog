@@ -39,10 +39,7 @@ const ImageViewer: FC<ImageViewerProps> = ({
         />
       </DialogTrigger>
       <DialogContent
-        className="p-0"
-        style={{
-          width: viewerWidth,
-        }}
+        className="p-0 !w-[671px] max-h-[871px] "
       >
         <Image
           height={250}
@@ -50,7 +47,7 @@ const ImageViewer: FC<ImageViewerProps> = ({
           unoptimized
           blurDataURL={blurDataUrl}
           placeholder="blur"
-          className={`w-full h-full rounded-md  object-cover ${className}`}
+          className={`w-full max-h-[871px] rounded-md  object-cover `}
           src={src}
           alt={"imgs"}
         />

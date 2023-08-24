@@ -75,17 +75,6 @@ const CommentAction: FC<CommentActionProps> = ({ children, comment }) => {
         ) : null}
       </div>
       {children}
-      {/* {isReply && activeComment?.id === comment?.id ? (
-        <div className="mt-2">
-          <CommentInput
-            type="reply"
-            parentId={comment?.id}
-            replyId={comment?.id}
-            height={100}
-            className="max-h-[150px]"
-          />
-        </div>
-      ) : null} */}
     </div>
   );
 };
