@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { MdiGithub, RiWeiboFill, TablerBrandBilibili, TablerBrandTwitterFilled } from "../SideBar/icons";
 export interface FooterProps {}
-type SideMenuItem = {
+export type SideMenuItem = {
   title: string;
   icon: ReactNode;
   link: string;

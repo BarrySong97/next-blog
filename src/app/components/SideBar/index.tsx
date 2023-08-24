@@ -8,6 +8,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import "./styles.css";
 import {
   IconParkFlashPayment,
+  LogosGoogleIcon,
   MaterialSymbolsLogin,
   NotoCameraWithFlash,
   NotoV1Postbox,
@@ -27,6 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 export interface SideBarProps {}
 type SideMenuItem = {
   title: string;
@@ -188,17 +190,32 @@ const Navigation: FC<SideBarProps> = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button
-              onClick={() => {
-                window.localStorage.setItem("redirectUrl", pathname);
-                createGoogleLoginUrl();
-              }}
-              className="rounded-full"
-              variant={"outline"}
-              size={"icon"}
-            >
-              <MaterialSymbolsLogin />
-            </Button>
+            <Popover>
+              <PopoverTrigger>
+                <Button
+                  className="rounded-full"
+                  variant={"outline"}
+                  size={"icon"}
+                >
+                  <MaterialSymbolsLogin />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Button
+                  onClick={() => {
+                    window.localStorage.setItem("redirectUrl", pathname);
+                    createGoogleLoginUrl();
+                  }}
+                  variant={"outline"}
+                  className="w-full"
+                >
+                  <div className="flex items-center gap-2">
+                    <LogosGoogleIcon />
+                    Google 登录
+                  </div>
+                </Button>
+              </PopoverContent>
+            </Popover>
           )}
         </div>
       </nav>
