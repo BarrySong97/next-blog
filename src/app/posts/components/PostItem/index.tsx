@@ -26,7 +26,7 @@ export default function PostItem({
     className,
     styles.articleItem,
     "cursor-pointer rounded-lg bg-transparent",
-    "focus-within:bg-glass lg:hover:bg-glass snap-center   transition-[background,transform] duration-300 focus-within:z-10 focus-within:scale-105 focus-within:shadow-lg lg:hover:z-10 lg:hover:scale-105 lg:hover:shadow-lg "
+    // "focus-within:bg-glass lg:hover:bg-glass snap-center   transition-[background,transform] duration-300   focus-within:shadow-lg lg:hover:z-10 lg:hover:scale-105 lg:hover:shadow-lg "
   );
   const _date = dayjs(date).format("YYYY/MM/DD");
   return (
@@ -35,7 +35,7 @@ export default function PostItem({
       style={style}
       href={`/posts/${id}?came=${came}`}
     >
-      <div className="shadow-lg rounded-lg">
+      <div className="shadow-lg rounded-lg overflow-hidden">
         <Image
           height={250}
           width={250}
@@ -43,7 +43,7 @@ export default function PostItem({
           src={cover ?? ""}
           blurDataURL={blurDataUrl}
           placeholder="blur"
-          className="rounded-lg aspect-[240/135] w-full object-cover "
+          className="rounded-lg aspect-[240/135] w-full transition-[background,transform] duration-700 object-cover hover:scale-125"
           alt={title}
         />
       </div>
