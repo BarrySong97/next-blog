@@ -7,6 +7,7 @@ COPY package*.json ./
 COPY pnpm-lock.yaml ./
 
 # Install app dependencies
+RUN pnpm config set registry https://registry.npmmirror.com/
 RUN pnpm i
 COPY . .
 
